@@ -33,8 +33,8 @@
 <br />
 	<input type="submit" value="ログイン" /> <br />
 <br />
-
 </form>
+
 <div class="copyright">Copyright(c) Haruka Suganuma</div>
 </div>
 </body>

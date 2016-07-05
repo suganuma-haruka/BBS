@@ -14,61 +14,61 @@ import exception.SQLRuntimeException;
 
 public class UserDao {
 
-		public User getUser(Connection connection, String loginId,String password) {
+	public User getUser(Connection connection, String loginId,String password) {
 
-			PreparedStatement ps = null;
-			try {
-				String sql = "SELECT * FROM users WHERE login_id = ? AND password = ?";
+		PreparedStatement ps = null;
+		try {
+			String sql = "SELECT * FROM users WHERE login_id = ? AND password = ?";
 
-				ps = connection.prepareStatement(sql);
-				ps.setString(1, loginId);
-				ps.setString(2, password);
+			ps = connection.prepareStatement(sql);
+			ps.setString(1, loginId);
+			ps.setString(2, password);
 
-				ResultSet rs = ps.executeQuery();
-				List<User> userList = toUserList(rs);
-				if (userList.isEmpty() == true) {
-					return null;
-				} else if (2 <= userList.size()) {
-					throw new IllegalStateException("2 <= userList.size()");
-				} else {
-					return userList.get(0);
-				}
-			} catch (SQLException e) {
-				throw new SQLRuntimeException(e);
-			} finally {
-				close(ps);
+			ResultSet rs = ps.executeQuery();
+			List<User> userList = toUserList(rs);
+			if (userList.isEmpty() == true) {
+				return null;
+			} else if (2 <= userList.size()) {
+				throw new IllegalStateException("2 <= userList.size()");
+			} else {
+				return userList.get(0);
 			}
+		} catch (SQLException e) {
+			throw new SQLRuntimeException(e);
+		} finally {
+			close(ps);
 		}
+	}
 
-		private List<User> toUserList(ResultSet rs) throws SQLException {
+	private List<User> toUserList(ResultSet rs) throws SQLException {
 
-			List<User> ret = new ArrayList<User>();
-			try {
-				while (rs.next()) {
-					int id = rs.getInt("id");
-					String loginId = rs.getString("login_id");
-					String password = rs.getString("password");
-					String name = rs.getString("name");
-					int branchId = rs.getInt("branch_id");
-					int positionId = rs.getInt("position_id");
+		List<User> ret = new ArrayList<User>();
+		try {
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				String loginId = rs.getString("login_id");
+				String password = rs.getString("password");
+				String name = rs.getString("name");
+				int branchId = rs.getInt("branch_id");
+				int positionId = rs.getInt("position_id");
 
-					User user = new User();
-					user.setId(id);
-					user.setLoginId(loginId);
-					user.setPassword(password);
-					user.setName(name);
-					user.setBranchId(branchId);
-					user.setPositionId(positionId);
+				User user = new User();
+				user.setId(id);
+				user.setLoginId(loginId);
+				user.setPassword(password);
+				user.setName(name);
+				user.setBranchId(branchId);
+				user.setPositionId(positionId);
 
-					ret.add(user);
-				}
-				return ret;
-			} finally {
-				close(rs);
+				ret.add(user);
 			}
+			return ret;
+		} finally {
+			close(rs);
 		}
+	}
 
-		public void insert(Connection connection, User user) {
+	public void insert(Connection connection, User user) {
 
 		PreparedStatement ps = null;
 		try {

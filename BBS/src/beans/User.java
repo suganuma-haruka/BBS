@@ -16,7 +16,6 @@ public class User implements Serializable {
 	public int getId() {
 		return id;
 	}
-
 	public void setId(int id) {
 		this.id = id;
 	}
@@ -24,7 +23,6 @@ public class User implements Serializable {
 	public String getLoginId() {
 		return login_id;
 	}
-
 	public void setLoginId(String login_id) {
 		this.login_id = login_id;
 	}
@@ -32,7 +30,6 @@ public class User implements Serializable {
 	public String getPassword() {
 		return password;
 	}
-
 	public void setPassword(String password) {
 		this.password = password;
 	}
@@ -40,7 +37,6 @@ public class User implements Serializable {
 	public String getName() {
 		return name;
 	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -48,7 +44,6 @@ public class User implements Serializable {
 	public int getBranchId() {
 		return branch_id;
 	}
-
 	public void setBranchId(int branch_id) {
 		this.branch_id = branch_id;
 	}
@@ -56,7 +51,6 @@ public class User implements Serializable {
 	public int getPositionId() {
 		return position_id;
 	}
-
 	public void setPositionId(int position_id) {
 		this.position_id = position_id;
 	}
@@ -64,7 +58,6 @@ public class User implements Serializable {
 	public boolean getState() {
 		return state;
 	}
-
 	public void setState(boolean state) {
 		this.state = state;
 	}

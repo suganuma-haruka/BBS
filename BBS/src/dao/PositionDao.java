@@ -44,10 +44,8 @@ public class PositionDao {
 				position.setName(name);
 
 				PositionList.add(position);
-
 			}
 			return PositionList;
-
 		} catch (SQLException e) {
 			throw new SQLRuntimeException(e);
 		}

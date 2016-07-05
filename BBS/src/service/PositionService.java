@@ -1,6 +1,5 @@
 package service;
 
-
 import static utils.CloseableUtil.*;
 import static utils.DBUtil.*;
 

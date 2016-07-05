@@ -30,6 +30,9 @@
 	<label for="password">パスワード</label>
 	<input name="password" type="password" id="password"/> <br />
 
+	<label for="passwordCheck">パスワード(確認)</label>
+	<input name="passwordCheck" type="password" id="password"/> <br />
+
 	<label for="name">ユーザー名</label>
 	<input name="name" id="name"/><br />
 
@@ -49,7 +52,7 @@
 
 	<input type="submit" value="登録" /> <br />
 <br />
-	<a href="./">戻る</a>
+	<a href="home">戻る</a>
 </form>
 <div class="copyright">Copyright(c) Haruka Suganuma</div>
 </div>

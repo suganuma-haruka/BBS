@@ -28,8 +28,6 @@ public class SignUpServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 		HttpServletResponse response) throws IOException, ServletException {
 
-//		HttpSession session = request.getSession();
-
 		List<Branches> branchList = new BranchService().select();
 		List<Positions> positionList = new PositionService().select();
 
@@ -55,10 +53,8 @@ public class SignUpServlet extends HttpServlet {
 		user.setPositionId(Integer.parseInt(request.getParameter("position")));
 
 		if (isValid(request, messages) == true) {
-
 			new UserService().register(user);
-
-			response.sendRedirect("./");
+			response.sendRedirect("home");
 		} else {
 			session.setAttribute("errorMessages", messages);
 			session.setAttribute("user", user);
@@ -69,31 +65,33 @@ public class SignUpServlet extends HttpServlet {
 	private boolean isValid(HttpServletRequest request, List<String> messages) {
 		String loginId = request.getParameter("loginId");
 		String password = request.getParameter("password");
-//		String name = request.getParameter("name");
-//		int branchId = Integer.parseInt(request.getParameter("branch_id"));
-//		int positionId = Integer.parseInt(request.getParameter("position_id"));
-
+		String passwordCheck = request.getParameter("passwordCheck");
+		String name = request.getParameter("name");
 
 		if (StringUtils.isEmpty(loginId) == true) {
 			messages.add("ログインIDを入力してください");
 		}
-//		if (!loginId.matches("~[a-zA-Z0-9]{6,20}")) {
-//			messages.add("ログインIDは半角英数字6桁以上20桁以内で入力してください");
-//		}
+		if (loginId.matches("~[a-zA-Z0-9]{6,20}$")) {
+			messages.add("ログインIDは半角英数字6桁以上20桁以内で入力してください");
+		}
 
-		if (StringUtils.isEmpty(password) == true) {
+		if (StringUtils.isEmpty(password) == true
+				|| StringUtils.isEmpty(passwordCheck) == true){
 			messages.add("パスワードを入力してください");
 		}
-//		if (!password.matches("{6,255}")) {
-//			messages.add("パスワードは6文字以上255文字以下で入力してください");
-//		}
+		if (password.matches("~{6,255}$")) {
+			messages.add("パスワードは半角文字のみで6文字以上255文字以下で入力してください");
+		}
+		if (password.equals(passwordCheck) == false) {
+			messages.add("パスワードが一致しません");
+		}
 
-//		if (StringUtils.isEmpty(name) == true) {
-//			messages.add("ユーザー名を入力してください");
-//		}
-//		if (name.length() > 10) {
-//			messages.add("ユーザー名は10文字以内で入力してください");
-//		}
+		if (StringUtils.isEmpty(name) == true) {
+			messages.add("ユーザー名を入力してください");
+		}
+		if (name.length() > 10) {
+			messages.add("ユーザー名は10文字以内で入力してください");
+		}
 
 		// TODO アカウントが既に利用されていないか、メールアドレスが既に登録されていないかなどの確認も必要
 		if (messages.size() == 0) {

@@ -27,7 +27,5 @@ public class StreamUtil {
 		} catch (IOException e) {
 			throw new IORuntimeException(e);
 		}
-
 	}
-
 }
