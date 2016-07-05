@@ -98,6 +98,7 @@ public class UserDao {
 			ps.setInt(5, user.getPositionId());
 
 			ps.executeUpdate();
+
 		} catch (SQLException e) {
 			throw new SQLRuntimeException(e);
 		} finally {

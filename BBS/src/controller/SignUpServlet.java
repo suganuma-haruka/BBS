@@ -28,13 +28,13 @@ public class SignUpServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 		HttpServletResponse response) throws IOException, ServletException {
 
-		HttpSession session = request.getSession();
+//		HttpSession session = request.getSession();
 
 		List<Branches> branchList = new BranchService().select();
 		List<Positions> positionList = new PositionService().select();
 
-		session.setAttribute("branchList", branchList);
-		session.setAttribute("positionList", positionList);
+		request.setAttribute("branchList", branchList);
+		request.setAttribute("positionList", positionList);
 
 		request.getRequestDispatcher("signup.jsp").forward(request, response);
 	}
@@ -48,11 +48,11 @@ public class SignUpServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 
 		User user = new User();
-		user.setLoginId(request.getParameter("login_id"));
+		user.setLoginId(request.getParameter("loginId"));
 		user.setPassword(request.getParameter("password"));
 		user.setName(request.getParameter("name"));
-		user.setBranchId(Integer.parseInt(request.getParameter("branch_id")));
-		user.setPositionId(Integer.parseInt(request.getParameter("position_id")));
+		user.setBranchId(Integer.parseInt(request.getParameter("branch")));
+		user.setPositionId(Integer.parseInt(request.getParameter("position")));
 
 		if (isValid(request, messages) == true) {
 
@@ -61,13 +61,13 @@ public class SignUpServlet extends HttpServlet {
 			response.sendRedirect("./");
 		} else {
 			session.setAttribute("errorMessages", messages);
-			request.setAttribute("user", user);
-			request.getRequestDispatcher("signup.jsp").forward(request, response);
+			session.setAttribute("user", user);
+			response.sendRedirect("signup");
 		}
 	}
 
 	private boolean isValid(HttpServletRequest request, List<String> messages) {
-		String loginId = request.getParameter("login_id");
+		String loginId = request.getParameter("loginId");
 		String password = request.getParameter("password");
 //		String name = request.getParameter("name");
 //		int branchId = Integer.parseInt(request.getParameter("branch_id"));
