@@ -40,7 +40,7 @@ public class CommentServlet extends HttpServlet {
 
 		Comment comment = new Comment();
 		comment.setText(request.getParameter("text"));
-//		comment.setPostingId(Integer.parseInt(request.getParameter("posting_id")));
+		comment.setPostingId(Integer.parseInt(request.getParameter("posting_id")));
 		comment.setUserId(user.getId());
 
 		if (isValid(request, messages) == true) {

@@ -11,7 +11,7 @@
 </head>
 <body>
 <div class="main-contents">
-	<h3>ホーム画面</h3>
+<h3>ホーム画面</h3>
 
 <c:if test="${ not empty errorMessages }">
 	<div class="errorMessages">
@@ -31,25 +31,33 @@
 </div>
 <br />
 
-<div class="userPostings">
-	<h3>投稿一覧</h3>
+
+<h3>投稿一覧</h3>
+	<div class="userPostings">
 	<c:forEach items="${ userPostings }" var="posting">
 		<div class="name">投稿者：<c:out value="${ posting.name }"/></div>
 		<div class="title">タイトル：<c:out value="${ posting.title }" /></div>
 		<div class="text">本文：<c:out value="${ posting.text }" /></div>
-		<div class="date">投稿日時：<fmt:formatDate value="${ posting.insertDate }" pattern="yyyy/MM/dd HH:mm:ss" /></div>
-		<br />
-	</c:forEach>
-</div>
+		<div class="date">投稿日時：<fmt:formatDate value="${ posting.insertDate }" pattern="yyyy/MM/dd HH:mm:ss" /></div><br />
 
-<div class="comment">
-	<h3>コメント投稿</h3>
+		<div class="userComments">
+		<c:forEach items="${ userComments }" var="comment">
+			<c:if test = "${ posting.postingId == comment.postingId }">
+				<div class="name">コメント投稿者：<c:out value="${comment.name }" /></div>
+				<div class="comment">コメント本文：<c:out value="${ comment.text }" /></div>
+				<div class="date">コメント投稿日時：<fmt:formatDate value="${ comment.insertDate }" pattern="yyyy/MM/dd HH:mm:ss" /></div><br />
+			</c:if>
+		</c:forEach>
+
 		<form action="comment" method="post">コメント入力<br />
-		<textarea name="text" cols="50" rows="5" class="comment-box"></textarea>
-		<br />
-		<input type="submit" value="コメント投稿">(500文字まで)
+			<textarea name="text" cols="50" rows="5" class="comment-box"></textarea><br />
+			<input type="submit" value="コメント投稿">(500文字まで)
+			<input type='hidden' value="${ posting.postingId }" name='posting_id'>
 		</form>
-<br />
+		<br />
+		</div>
+	</c:forEach>
+
 </div>
 <div class="copyright">Copyright(c) Haruka Suganuma</div>
 </div>

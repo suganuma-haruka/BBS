@@ -9,8 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import service.CommentService;
 import service.PostingService;
 import beans.User;
+import beans.UserComment;
 import beans.UserPosting;
 
 @WebServlet(urlPatterns = { "/home" })
@@ -30,8 +32,10 @@ public class HomeServlet extends HttpServlet {
 		}
 
 		List<UserPosting> userPostings = new PostingService().getPosting();
+		List<UserComment> userComments =new CommentService().getComment();
 
 		request.setAttribute("userPostings", userPostings);
+		request.setAttribute("userComments", userComments);
 		request.setAttribute("isShowPostingForm", isShowPostingForm);
 
 		request.getRequestDispatcher("/home.jsp").forward(request, response);

@@ -41,15 +41,25 @@ public class UserPostingDao {
 		List<UserPosting> userPostingList = new ArrayList<UserPosting>();
 		try {
 			while (rs.next()) {
+				int postingId = rs.getInt("posting_id");
+				int userId = rs.getInt("user_id");
+				int branchId = rs.getInt("branch_id");
+				int positionId = rs.getInt("position_id");
 				String name = rs.getString("name");
 				String title = rs.getString("title");
 				String text = rs.getString("text");
+				String category = rs.getString("category");
 				Timestamp insertDate = rs.getTimestamp("insert_date");
 
 				UserPosting posting = new UserPosting();
+				posting.setPostingId(postingId);
+				posting.setUserId(userId);
+				posting.setBranchId(branchId);
+				posting.setPositionId(positionId);
 				posting.setName(name);
 				posting.setTitle(title);
 				posting.setText(text);
+				posting.setCategory(category);
 				posting.setInsertDate(insertDate);
 
 				userPostingList.add(posting);
