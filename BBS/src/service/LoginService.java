@@ -4,6 +4,7 @@ import static utils.CloseableUtil.*;
 import static utils.DBUtil.*;
 
 import java.sql.Connection;
+import java.util.List;
 
 import utils.CipherUtil;
 import beans.User;
@@ -34,4 +35,30 @@ public class LoginService {
 			close(connection);
 		}
 	}
+
+	private static final int LIMIT_NUM = 1000;
+
+	public List<User> UserCotrolList() {
+
+		Connection connection = null;
+		try {
+			connection = getConnection();
+
+			UserDao userDao = new UserDao();
+			List<User> ret = userDao.getUserControlList(connection, LIMIT_NUM);
+
+			commit(connection);
+
+			return ret;
+		} catch (RuntimeException e) {
+			rollback(connection);
+			throw e;
+		} catch (Error e) {
+			rollback(connection);
+			throw e;
+		} finally {
+			close(connection);
+		}
+	}
+
 }

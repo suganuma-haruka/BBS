@@ -45,6 +45,11 @@ public class CommentServlet extends HttpServlet {
 
 		if (isValid(request, messages) == true) {
 			new CommentService().register(comment);
+
+			List<String> complete = new ArrayList<String>();
+			complete.add("正常に新規コメントが投稿されました。");
+
+			session.setAttribute("completeMessage", complete);
 			response.sendRedirect("home");
 		} else {
 			session.setAttribute("errorMessages", messages);
@@ -58,10 +63,10 @@ public class CommentServlet extends HttpServlet {
 		String text = request.getParameter("text");
 
 		if (StringUtils.isEmpty(text) == true) {
-			messages.add("コメントを入力してください");
+			messages.add("コメントを入力してください。");
 		}
 		if (text.length() > 500) {
-			messages.add("コメントは500文字以内で入力してください");
+			messages.add("コメントは500文字以下で入力してください。");
 		}
 
 		if (messages.size() == 0) {

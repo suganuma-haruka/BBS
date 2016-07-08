@@ -6,12 +6,13 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>ユーザー登録</title>
+	<title>ユーザー新規登録</title>
 	<link href="./css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div class="main-contents">
-	<h3>新規ユーザー登録</h3>
+	<h2>≪ユーザー新規登録≫</h2>
+
 <c:if test="${ not empty errorMessages }">
 	<div class="errorMessages">
 		<ul>
@@ -22,28 +23,29 @@
 	</div>
 	<c:remove var="errorMessages" scope="session"/>
 </c:if>
-<form action="signup" method="post"><br />
 
-	<label for="loginId">ログインID</label>
+<form action="signup" method="post">
+
+	<label for="loginId">ログインID</label><br />
 	<input name="loginId" id="loginId"/><br />
 
-	<label for="password">パスワード</label>
+	<label for="password">パスワード</label><br />
 	<input name="password" type="password" id="password"/> <br />
 
-	<label for="passwordCheck">パスワード(確認)</label>
+	<label for="passwordCheck">パスワード(確認)</label><br />
 	<input name="passwordCheck" type="password" id="password"/> <br />
 
-	<label for="name">ユーザー名</label>
+	<label for="name">ユーザー名</label><br />
 	<input name="name" id="name"/><br />
 
-	<label for="branch">所属支店</label>
+	<label for="branch">所属支店</label><br />
 	<select name="branch">
 		<c:forEach items="${ branchList }" var="branch">
 			<option value="${ branch.id }">${ branch.name }</option>
 		</c:forEach>
 	</select><br />
 
-	<label for="position">所属部署・役職</label>
+	<label for="position">所属部署・役職</label><br />
 	<select name="position">
 		<c:forEach items="${ positionList }" var="position">
 			<option value="${ position.id }">${ position.name }</option>

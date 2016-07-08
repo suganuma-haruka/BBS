@@ -1,6 +1,7 @@
 package beans;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -12,6 +13,8 @@ public class User implements Serializable {
 	private int branch_id;
 	private int position_id;
 	private boolean state;
+	private Date insert_date;
+	private Date update_date;
 
 	public int getId() {
 		return id;
@@ -60,6 +63,20 @@ public class User implements Serializable {
 	}
 	public void setState(boolean state) {
 		this.state = state;
+	}
+
+	public Date getInsertDate() {
+		return insert_date;
+	}
+	public void setInsertDate(Date insert_date) {
+		this.insert_date = insert_date;
+	}
+
+	public Date getUpdateDate() {
+		return update_date;
+	}
+	public void setUpdateDate(Date update_date) {
+		this.update_date = update_date;
 	}
 
 }

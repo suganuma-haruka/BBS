@@ -46,6 +46,11 @@ public class PostingServlet extends HttpServlet {
 
 		if (isValid(request, messages) == true) {
 			new PostingService().register(posting);
+
+			List<String> complete = new ArrayList<String>();
+			complete.add("正常に新規投稿処理が完了しました。");
+
+			session.setAttribute("completeMessage", complete);
 			response.sendRedirect("home");
 		} else {
 			session.setAttribute("errorMessages", messages);
@@ -60,24 +65,24 @@ public class PostingServlet extends HttpServlet {
 		String category = request.getParameter("category");
 
 		if (StringUtils.isEmpty(title) == true) {
-			messages.add("件名を入力してください");
+			messages.add("件名を入力してください。");
 		}
 		if (50 < title.length()) {
-			messages.add("件名は50文字以内で入力してください");
+			messages.add("件名は50文字以下で入力してください。");
 		}
 
 		if (StringUtils.isEmpty(text) == true) {
-			messages.add("本文を入力してください");
+			messages.add("本文を入力してください。");
 		}
 		if (1000 < text.length()) {
-			messages.add("本文は1000文字以内で入力してください");
+			messages.add("本文は1,000文字以下で入力してください。");
 		}
 
 		if (StringUtils.isEmpty(category) == true) {
-			messages.add("カテゴリを入力してください");
+			messages.add("カテゴリを入力してください。");
 		}
 		if (10 < category.length()) {
-			messages.add("カテゴリは10文字以内で入力してください");
+			messages.add("カテゴリは10文字以下で入力してください。");
 		}
 
 		if (messages.size() == 0) {

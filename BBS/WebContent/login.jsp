@@ -11,13 +11,13 @@
 </head>
 <body>
 <div class="main-contents">
-	<h3>掲示板システム≪ログイン≫</h3>
+	<h2>掲示板システム≪ログイン≫</h2>
 
 <c:if test="${ not empty errorMessages }">
 	<div class="errorMessages">
 		<ul>
-			<c:forEach items="${errorMessages}" var="message">
-				<li><c:out value="${message}" />
+			<c:forEach items="${ errorMessages }" var="message">
+				<li><c:out value="${ message }" />
 			</c:forEach>
 		</ul>
 	</div>
@@ -25,10 +25,10 @@
 </c:if>
 
 <form action="login" method="post"><br />
-	<label for="login_id">ログインID</label>
-	<input name="login_id" value="${loginUser.loginId}" id="login_id"/> <br />
+	<label for="login_id">ログインID</label><br />
+	<input name="login_id" value="${ loginUser.loginId }" id="login_id"/> <br />
 
-	<label for="password">パスワード</label>
+	<label for="password">パスワード</label><br />
 	<input name="password" type="password" id="password"/> <br />
 	<input type="submit" value="ログイン" /> <br />
 <br />
