@@ -85,19 +85,21 @@ public class UserService {
 	public void changeState(int id,int state){
 
 		Connection connection = getConnection();
-		try{
+		try {
 			UserDao userDao = new UserDao();
+
 //			state = userDao.getState(connection, id);
 			userDao.changeState(connection, id, state);
+
 			commit(connection);
-		}catch(RuntimeException e){
+
+		} catch(RuntimeException e) {
 			rollback(connection);
 			throw e;
-		}catch(Error e){
+		} catch(Error e) {
 			rollback(connection);
 			throw e;
-		}
-		finally{
+		} finally {
 			close(connection);
 		}
 	}

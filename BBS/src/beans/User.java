@@ -12,7 +12,7 @@ public class User implements Serializable {
 	private String name;
 	private int branch_id;
 	private int position_id;
-	private boolean state;
+	private int state;
 	private Date insert_date;
 	private Date update_date;
 
@@ -58,10 +58,10 @@ public class User implements Serializable {
 		this.position_id = position_id;
 	}
 
-	public boolean getState() {
+	public int getState() {
 		return state;
 	}
-	public void setState(boolean state) {
+	public void setState(int state) {
 		this.state = state;
 	}
 

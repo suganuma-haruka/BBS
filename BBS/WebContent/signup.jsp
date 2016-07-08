@@ -54,7 +54,7 @@
 
 	<input type="submit" value="登録" /> <br />
 <br />
-	<a href="home">戻る</a>
+	<a href="userControl">戻る</a>
 </form>
 <div class="copyright">Copyright(c) Haruka Suganuma</div>
 </div>

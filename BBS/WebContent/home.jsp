@@ -43,7 +43,6 @@
 </div>
 <br />
 
-
 <h3>・投稿一覧</h3>
 	<div class="userPostings">
 	<c:forEach items="${ userPostings }" var="posting">
@@ -69,7 +68,6 @@
 		<br />
 		</div>
 	</c:forEach>
-
 </div>
 <br />
 <div class="copyright">Copyright(c) Haruka Suganuma</div>

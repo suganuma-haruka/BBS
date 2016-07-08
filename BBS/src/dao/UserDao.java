@@ -223,7 +223,7 @@ public class UserDao {
 //	public int getState(Connection connection, int id){
 //		PreparedStatement ps = null;
 //		int ret = 0;
-//		try{
+//		try {
 //			String sql = "SELECT state FROM users WHERE id = ?";
 //			ps = connection.prepareStatement(sql);
 //			ps.setInt(1, id);
@@ -232,29 +232,32 @@ public class UserDao {
 //			rs.next();
 //			ret = rs.getInt("state");
 //
-//		}catch(Exception e){
+//		} catch(Exception e) {
 //
-//		}finally{
+//		} finally {
 //			close(ps);
 //		}
 //		return ret;
 //	}
 
 	public void changeState(Connection connection, int id,int state){
-		PreparedStatement ps = null;
 
-		try{
+		PreparedStatement ps = null;
+		try {
 			StringBuilder sql = new StringBuilder();
 			sql.append("UPDATE users SET state = ? WHERE id = ?");
+
 			ps = connection.prepareStatement(sql.toString());
+
 			ps.setInt(1, state);
 			ps.setInt(2, id);
+
 			if((ps.executeUpdate()) == 0){
 				throw new NoRowsUpdatedRuntimeException();
 			}
-		}catch(SQLException e){
+		} catch(SQLException e) {
 			throw new SQLRuntimeException(e);
-		}finally{
+		} finally {
 			close(ps);
 		}
 	}
