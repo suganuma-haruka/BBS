@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import service.CommentService;
 import service.PostingService;
@@ -24,6 +25,10 @@ public class HomeServlet extends HttpServlet {
 			HttpServletResponse response) throws IOException, ServletException {
 
 		User user = (User) request.getSession().getAttribute("loginUser");
+
+		HttpSession session = request.getSession();
+		session.setAttribute("loginUser", user);
+
 		boolean isShowPostingForm;
 		if (user != null) {
 			isShowPostingForm = true;

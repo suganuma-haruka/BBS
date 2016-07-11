@@ -87,8 +87,6 @@ public class UserService {
 		Connection connection = getConnection();
 		try {
 			UserDao userDao = new UserDao();
-
-//			state = userDao.getState(connection, id);
 			userDao.changeState(connection, id, state);
 
 			commit(connection);

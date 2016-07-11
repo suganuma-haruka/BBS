@@ -19,7 +19,7 @@ public class UserDao {
 
 		PreparedStatement ps = null;
 		try {
-			String sql = "SELECT * FROM users WHERE login_id = ? AND password = ?";
+			String sql = "SELECT * FROM users WHERE login_id = ? AND password = ? AND state = 1";
 
 			ps = connection.prepareStatement(sql);
 			ps.setString(1, loginId);
@@ -197,7 +197,7 @@ public class UserDao {
 				String name = rs.getString("name");
 				int branchId = rs.getInt("branch_id");
 				int positionId = rs.getInt("position_id");
-//				boolean state = rs.getBoolean("state");
+				int state = rs.getInt("state");
 //				Timestamp insertDate = rs.getTimestamp("insert_date");
 //				Timestamp updateDate = rs.getTimestamp("update_date");
 
@@ -208,7 +208,7 @@ public class UserDao {
 				users.setName(name);
 				users.setBranchId(branchId);
 				users.setPositionId(positionId);
-//				users.setState(state);
+				users.setState(state);
 //				users.setInsertDate(insertDate);
 //				users.setUpdateDate(updateDate);
 
@@ -219,26 +219,6 @@ public class UserDao {
 			close(rs);
 		}
 	}
-
-//	public int getState(Connection connection, int id){
-//		PreparedStatement ps = null;
-//		int ret = 0;
-//		try {
-//			String sql = "SELECT state FROM users WHERE id = ?";
-//			ps = connection.prepareStatement(sql);
-//			ps.setInt(1, id);
-//
-//			ResultSet rs = ps.executeQuery();
-//			rs.next();
-//			ret = rs.getInt("state");
-//
-//		} catch(Exception e) {
-//
-//		} finally {
-//			close(ps);
-//		}
-//		return ret;
-//	}
 
 	public void changeState(Connection connection, int id,int state){
 
