@@ -25,8 +25,8 @@
 </c:if>
 
 <form action="login" method="post"><br />
-	<label for="login_id">ログインID</label><br />
-	<input name="login_id" value="${ loginUser.loginId }" id="login_id"/> <br />
+	<label for="user_id">ユーザーID</label><br />
+	<input name="user_id" value="${ loginUser.userId }" id="user_id"/> <br />
 
 	<label for="password">パスワード</label><br />
 	<input name="password" type="password" id="password"/> <br />

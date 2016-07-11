@@ -31,14 +31,14 @@ public class LoginServlet extends HttpServlet {
 			HttpServletResponse response) throws IOException, ServletException {
 
 		User loginUser = new User();
-		loginUser.setLoginId(request.getParameter("login_id"));
+		loginUser.setUserId(request.getParameter("user_id"));
 		loginUser.setPassword(request.getParameter("password"));
 
-		String loginId = request.getParameter("login_id");
+		String userId = request.getParameter("user_id");
 		String password = request.getParameter("password");
 
 		LoginService loginService = new LoginService();
-		User user = loginService.login(loginId, password);
+		User user = loginService.login(userId, password);
 
 		HttpSession session = request.getSession();
 		if (user != null) {
@@ -48,6 +48,7 @@ public class LoginServlet extends HttpServlet {
 			List<String> messages = new ArrayList<String>();
 			messages.add("ログインに失敗しました。");
 			session.setAttribute("errorMessages", messages);
+
 			request.setAttribute("loginUser", loginUser);
 			request.getRequestDispatcher("login.jsp").forward(request, response);
 		}

@@ -16,8 +16,8 @@
 <c:if test="${ not empty errorMessages }">
 	<div class="errorMessages">
 		<ul>
-			<c:forEach items="${errorMessages}" var="message">
-				<li><c:out value="${message}" />
+			<c:forEach items="${errorMessages}" var="messages">
+				<li><c:out value="${ messages }" />
 			</c:forEach>
 		</ul>
 	</div>
@@ -26,8 +26,8 @@
 
 <form action="settings" method="post" >
 
-	<label for="loginId">ログインID</label><br />
-	<input name="loginId" value="${ editUser.loginId }" id="loginId"/>(半角英数字、6文字以上20文字以内)<br />
+	<label for="userId">ユーザーID</label><br />
+	<input name="userId" value="${ editUser.userId }" id="userId"/>(半角英数字、6文字以上20文字以内)<br />
 
 	<label for="password">パスワード</label><br />
 	<input name="password" type="password"  id="password" >(記号を含む全ての半角文字、6文字以上255文字以内)<br />

@@ -46,19 +46,20 @@ public class SignUpServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 
 		User user = new User();
-		user.setLoginId(request.getParameter("loginId"));
+		user.setUserId(request.getParameter("userId"));
 		user.setPassword(request.getParameter("password"));
 		user.setName(request.getParameter("name"));
 		user.setBranchId(Integer.parseInt(request.getParameter("branch")));
 		user.setPositionId(Integer.parseInt(request.getParameter("position")));
 
 		if (isValid(request, messages) == true) {
+
 			new UserService().register(user);
 
 			List<String> complete = new ArrayList<String>();
 			complete.add("正常に新規ユーザーが登録されました。");
-
 			session.setAttribute("completeMessage", complete);
+
 			response.sendRedirect("home");
 		} else {
 			session.setAttribute("errorMessages", messages);
@@ -68,16 +69,16 @@ public class SignUpServlet extends HttpServlet {
 	}
 
 	private boolean isValid(HttpServletRequest request, List<String> messages) {
-		String loginId = request.getParameter("loginId");
+		String userId = request.getParameter("userId");
 		String password = request.getParameter("password");
 		String passwordCheck = request.getParameter("passwordCheck");
 		String name = request.getParameter("name");
 		int branch = Integer.parseInt(request.getParameter("branch"));
 		int position = Integer.parseInt(request.getParameter("position"));
 
-		if (StringUtils.isEmpty(loginId) == true) {
+		if (StringUtils.isEmpty(userId) == true) {
 			messages.add("ログインIDを入力してください。");
-		} else if (!loginId.matches("^[0-9a-zA-Z]{6,20}")) {
+		} else if (!userId.matches("^[0-9a-zA-Z]{6,20}")) {
 			messages.add("ログインIDは半角英数字6桁以上20桁以下で入力してください。");
 		}
 
@@ -97,11 +98,11 @@ public class SignUpServlet extends HttpServlet {
 			messages.add("ユーザー名は10文字以下で入力してください。");
 		}
 
-		if(branch == 0){
+		if (branch == 0){
 			messages.add("所属支店を選択してください。");
 		}
 
-		if(position == 0){
+		if (position == 0){
 			messages.add("所属部署・役職を選択してください。");
 		}
 

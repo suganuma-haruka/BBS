@@ -44,12 +44,13 @@ public class CommentServlet extends HttpServlet {
 		comment.setUserId(user.getId());
 
 		if (isValid(request, messages) == true) {
+
 			new CommentService().register(comment);
 
 			List<String> complete = new ArrayList<String>();
 			complete.add("正常に新規コメントが投稿されました。");
-
 			session.setAttribute("completeMessage", complete);
+
 			response.sendRedirect("home");
 		} else {
 			session.setAttribute("errorMessages", messages);

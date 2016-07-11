@@ -26,8 +26,8 @@
 
 <form action="signup" method="post">
 
-	<label for="loginId">ログインID</label><br />
-	<input name="loginId" id="loginId"/><br />
+	<label for="userId">ユーザーID</label><br />
+	<input name="userId" id="userId"/><br />
 
 	<label for="password">パスワード</label><br />
 	<input name="password" type="password" id="password"/> <br />

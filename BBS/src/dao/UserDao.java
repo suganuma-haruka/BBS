@@ -19,7 +19,7 @@ public class UserDao {
 
 		PreparedStatement ps = null;
 		try {
-			String sql = "SELECT * FROM users WHERE login_id = ? AND password = ? AND state = 1";
+			String sql = "SELECT * FROM users WHERE user_id = ? AND password = ? AND state = 1";
 
 			ps = connection.prepareStatement(sql);
 			ps.setString(1, loginId);
@@ -47,7 +47,7 @@ public class UserDao {
 		try {
 			while (rs.next()) {
 				int id = rs.getInt("id");
-				String loginId = rs.getString("login_id");
+				String userId = rs.getString("user_id");
 				String password = rs.getString("password");
 				String name = rs.getString("name");
 				int branchId = rs.getInt("branch_id");
@@ -55,7 +55,7 @@ public class UserDao {
 
 				User user = new User();
 				user.setId(id);
-				user.setLoginId(loginId);
+				user.setUserId(userId);
 				user.setPassword(password);
 				user.setName(name);
 				user.setBranchId(branchId);
@@ -75,14 +75,14 @@ public class UserDao {
 		try {
 			StringBuilder sql = new StringBuilder();
 			sql.append("INSERT INTO users ( ");
-			sql.append("login_id, ");
+			sql.append("user_id, ");
 			sql.append("password, ");
 			sql.append("name, ");
 			sql.append("branch_id, ");
 			sql.append("position_id, ");
 			sql.append("state");
 			sql.append(") VALUES (");
-			sql.append("?, "); // login_id
+			sql.append("?, "); // user_id
 			sql.append("?, "); // password
 			sql.append("?, "); // name
 			sql.append("?, "); // branch_id
@@ -92,7 +92,7 @@ public class UserDao {
 
 			ps = connection.prepareStatement(sql.toString());
 
-			ps.setString(1, user.getLoginId());
+			ps.setString(1, user.getUserId());
 			ps.setString(2, user.getPassword());
 			ps.setString(3, user.getName());
 			ps.setInt(4, user.getBranchId());
@@ -113,7 +113,7 @@ public class UserDao {
 		try {
 			StringBuilder sql = new StringBuilder();
 			sql.append("UPDATE users SET");
-			sql.append(" login_id = ?,");
+			sql.append(" user_id = ?,");
 			sql.append(" password= ?,");
 			sql.append(" name= ?,");
 			sql.append(" branch_id= ?,");
@@ -123,7 +123,7 @@ public class UserDao {
 
 			ps = connection.prepareStatement(sql.toString());
 
-			ps.setString(1, user.getLoginId());
+			ps.setString(1, user.getUserId());
 			ps.setString(2, user.getPassword());
 			ps.setString(3, user.getName());
 			ps.setInt(4, user.getBranchId());
@@ -192,7 +192,7 @@ public class UserDao {
 		try {
 			while (rs.next()) {
 				int id = rs.getInt("id");
-				String login_id = rs.getString("login_id");
+				String userId = rs.getString("user_id");
 //				String password = rs.getString("password");
 				String name = rs.getString("name");
 				int branchId = rs.getInt("branch_id");
@@ -203,7 +203,7 @@ public class UserDao {
 
 				User users = new User();
 				users.setId(id);
-				users.setLoginId(login_id);
+				users.setUserId(userId);
 //				users.setPassword(password);
 				users.setName(name);
 				users.setBranchId(branchId);

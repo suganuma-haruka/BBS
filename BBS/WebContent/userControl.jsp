@@ -12,32 +12,42 @@
 <body>
 <div class="main-contents">
 	<h2>≪ユーザー管理≫</h2>
-
-<div class="header">
-	<h3>・メニュー</h3>
-	<a href="signup">ユーザー新規登録</a>
 </div>
-</div>
-<br />
-
 <c:if test="${ not empty errorMessages }">
 	<div class="errorMessages">
 		<ul>
 			<c:forEach items="${ errorMessages }" var="message">
-				<font color="red">エラー：<c:out value="${ message }" /></font>
+				<c:out value="${ message }" />
 			</c:forEach>
 		</ul>
 	</div>
 	<c:remove var="errorMessages" scope="session"/>
 </c:if>
+
+<c:if test="${ not empty completeMessage }">
+	<div class="completeMessage">
+		<ul>
+			<c:forEach items="${ completeMessage }" var="complet">
+				<li><c:out value="${ complet }" />
+			</c:forEach>
+		</ul>
+	</div>
+	<c:remove var="completeMessage" scope="session"/>
+</c:if>
 	<c:remove var="editUser" scope="session"/>
+
+<div class="header">
+	<h3>・メニュー</h3>
+	<a href="signup">ユーザー新規登録</a>
+</div>
+<br />
 
 <h3>・登録済みユーザー一覧</h3>
 <div class="userControlList">
 	<c:forEach items="${ userControlList }" var="user">
 		<div class="setting">
 			<div class="account-name">
-				<span class="Login_id">ログインID：<c:out value="${ user.loginId }" /></span><br/>
+				<span class="userId">ユーザーID：<c:out value="${ user.userId }" /></span><br/>
 
 				<span class="name">ユーザー名：<c:out value="${ user.name }" /></span><br/>
 
@@ -66,7 +76,7 @@
 					<input type="submit" value="アカウントを停止" onClick = "return confirm('このユーザーアカウントを停止します。よろしいですか？')">
 				</c:if>
 			</form>
-			<a href="settings?userId=${ user.id }">編集</a><br/>
+			<a href="settings?userId=${ user.id }">ユーザー編集</a><br/>
 			<br />
 		</div>
 	</c:forEach>

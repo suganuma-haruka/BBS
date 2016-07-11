@@ -44,21 +44,28 @@ public class SettingsServlet extends HttpServlet {
 		request.getRequestDispatcher("settings.jsp").forward(request, response);
 	}
 
-		@Override
-		protected void doPost(HttpServletRequest request,
-				HttpServletResponse response) throws ServletException, IOException {
+	@Override
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 
-			List<String> messages = new ArrayList<String>();
+		List<String> messages = new ArrayList<String>();
 
-			HttpSession session = request.getSession();
+		HttpSession session = request.getSession();
 
-			User editUser = getEditUser(request);
-			session.setAttribute("editUser", editUser);
+		User editUser = new User();
+		editUser.setUserId(request.getParameter("userId"));
+		editUser.setPassword(request.getParameter("password"));
+		editUser.setName(request.getParameter("name"));
+		editUser.setBranchId(Integer.parseInt(request.getParameter("branch")));
+		editUser.setPositionId(Integer.parseInt(request.getParameter("position")));
+		editUser.setId(Integer.parseInt(request.getParameter("id")));
 
 		if (isValid(request, messages) == true) {
 
 			try {
+
 				new UserService().update(editUser);
+
 			} catch (NoRowsUpdatedRuntimeException e) {
 				session.removeAttribute("editUser");
 				messages.add("他の人によって更新されています。最新のデータを表示しました。データを確認してください。");
@@ -66,65 +73,55 @@ public class SettingsServlet extends HttpServlet {
 				response.sendRedirect("settings");
 				return;
 			}
-			session.setAttribute("editUser", editUser);
+			List<String> complete = new ArrayList<String>();
+			complete.add("正常にユーザー編集が完了しました。");
+			session.setAttribute("completeMessage", complete);
 
-			response.sendRedirect("home");
+			session.setAttribute("editUser", editUser);
+			response.sendRedirect("userControl");
 		} else {
 			session.setAttribute("errorMessages", messages);
 			response.sendRedirect("settings");
-			System.out.println(editUser);
+//			System.out.println(editUser);
 		}
 	}
 
-	private User getEditUser(HttpServletRequest request)
-			throws IOException, ServletException {
-
-		User editUser = new User();
-		editUser.setLoginId(request.getParameter("loginId"));
-		editUser.setName(request.getParameter("name"));
-		editUser.setPassword(request.getParameter("password"));
-		editUser.setBranchId(Integer.parseInt(request.getParameter("branch")));
-		editUser.setPositionId(Integer.parseInt(request.getParameter("position")));
-		editUser.setId(Integer.parseInt(request.getParameter("id")));
-		return editUser;
-	}
-
 	private boolean isValid(HttpServletRequest request, List<String> messages) {
-		String login_id = request.getParameter("loginId");
+		String userId = request.getParameter("userId");
 		String password = request.getParameter("password");
 		String passwordCheck = request.getParameter("passwordCheck");
 		String name = request.getParameter("name");
 		int branch = Integer.parseInt(request.getParameter("branch"));
 		int position = Integer.parseInt(request.getParameter("position"));
 
-		if (StringUtils.isEmpty(login_id) == true) {
-				messages.add("ログインIDを入力してください");
-		} else if (!login_id.matches("^[0-9a-zA-Z]{6,20}")) {
-				messages.add("ログインIDは半角英数字6桁以上20桁以下で入力してください");
+		if (StringUtils.isEmpty(userId) == true) {
+			messages.add("ログインIDを入力してください。");
+		} else if (!userId.matches("^[0-9a-zA-Z]{6,20}")) {
+			messages.add("ログインIDは半角英数字6桁以上20桁以下で入力してください。");
 		}
 
 		if (StringUtils.isEmpty(password) == true || StringUtils.isEmpty(passwordCheck) == true) {
-			messages.add("パスワードを入力してください");
+			messages.add("パスワードを入力してください。");
 		} else if (password.matches("^[a-zA-Z0-9 -/:-@\\[-\\`\\{-\\~]")) {
-			messages.add("パスワードは半角文字のみで入力してください");
+			messages.add("パスワードは半角文字のみで入力してください。");
 		} else if (password.matches("{6,255}$")) {
-			messages.add("パスワードは6文字以上255文字以下で入力してください");
+			messages.add("パスワードは6文字以上255文字以下で入力してください。");
 		} else if (password.equals(passwordCheck) == false) {
-			messages.add("パスワードが一致しません");
+			messages.add("入力されたパスワードが一致しません。");
 		}
 
-		if(StringUtils.isEmpty(name) == true) {
-			messages.add("名前を入力してください");
+		if (StringUtils.isEmpty(name) == true) {
+			messages.add("ユーザー名を入力してください。");
 		} else if (name.length() > 10) {
-			messages.add("名前は10文字以下で入力してください");
+			messages.add("ユーザー名は10文字以下で入力してください。");
 		}
 
-		if(branch == 0){
-			messages.add("所属支店を選択してください");
+		if (branch == 0){
+			messages.add("所属支店を選択してください。");
 		}
 
-		if(position == 0){
-			messages.add("所属部署・役職を選択してください");
+		if (position == 0){
+			messages.add("所属部署・役職を選択してください。");
 		}
 
 		// TODO アカウントが既に利用されていないか、メールアドレスが既に登録されていないかなどの確認も必要

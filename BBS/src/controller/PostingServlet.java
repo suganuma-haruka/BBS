@@ -45,12 +45,13 @@ public class PostingServlet extends HttpServlet {
 		posting.setUserId(user.getId());
 
 		if (isValid(request, messages) == true) {
+
 			new PostingService().register(posting);
 
 			List<String> complete = new ArrayList<String>();
 			complete.add("正常に新規投稿処理が完了しました。");
-
 			session.setAttribute("completeMessage", complete);
+
 			response.sendRedirect("home");
 		} else {
 			session.setAttribute("errorMessages", messages);

@@ -51,8 +51,8 @@ public class UserControlServlet extends HttpServlet {
 
 			List<String> messages = new ArrayList<String>();
 			messages.add("本社所属の人事総務部ではない為、アクセス権限がありません。");
-
 			session.setAttribute("errorMessages", messages);
+
 			response.sendRedirect("home");
 		}
 	}
