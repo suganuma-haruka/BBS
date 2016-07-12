@@ -60,4 +60,22 @@ public class PostingService {
 		}
 	}
 
+	public void deletePosting(int id){
+
+		Connection connection = getConnection();
+		try{
+			new PostingDao().deletePosting(connection, id);
+			commit(connection);
+		}catch(RuntimeException e){
+			rollback(connection);
+			throw e;
+		}catch(Error e){
+			rollback(connection);
+			throw e;
+		}finally{
+			close(connection);
+		}
+
+	}
+
 }

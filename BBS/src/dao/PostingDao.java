@@ -1,10 +1,13 @@
 package dao;
 
+import static utils.CloseableUtil.*;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import beans.Posting;
+import exception.NoRowsUpdatedRuntimeException;
 import exception.SQLRuntimeException;
 
 public class PostingDao {
@@ -40,6 +43,24 @@ public class PostingDao {
 			ps.executeUpdate();
 		} catch(SQLException e) {
 			throw new SQLRuntimeException(e);
+		}
+	}
+
+	public void deletePosting(Connection connection, int id) {
+
+		PreparedStatement ps = null;
+		try {
+			StringBuilder sql = new StringBuilder();
+			sql.append("DELETE FROM postings WHERE id = ?");
+			ps = connection.prepareStatement(sql.toString());
+			ps.setInt(1, id);
+			if ((ps.executeUpdate()) == 0) {
+				throw new NoRowsUpdatedRuntimeException();
+			}
+		} catch(SQLException e) {
+			throw new SQLRuntimeException(e);
+		} finally {
+			close(ps);
 		}
 	}
 }

@@ -220,7 +220,7 @@ public class UserDao {
 		}
 	}
 
-	public void changeState(Connection connection, int id,int state){
+	public void changeState(Connection connection, int id,int state) {
 
 		PreparedStatement ps = null;
 		try {
@@ -232,7 +232,7 @@ public class UserDao {
 			ps.setInt(1, state);
 			ps.setInt(2, id);
 
-			if((ps.executeUpdate()) == 0){
+			if ((ps.executeUpdate()) == 0) {
 				throw new NoRowsUpdatedRuntimeException();
 			}
 		} catch(SQLException e) {
@@ -242,4 +242,21 @@ public class UserDao {
 		}
 	}
 
+	public void deleteUser(Connection connection, int id) {
+
+		PreparedStatement ps = null;
+		try {
+			StringBuilder sql = new StringBuilder();
+			sql.append("DELETE FROM users WHERE id = ?");
+			ps = connection.prepareStatement(sql.toString());
+			ps.setInt(1, id);
+			if ((ps.executeUpdate()) == 0) {
+				throw new NoRowsUpdatedRuntimeException();
+			}
+		} catch(SQLException e) {
+			throw new SQLRuntimeException(e);
+		} finally {
+			close(ps);
+		}
+	}
 }

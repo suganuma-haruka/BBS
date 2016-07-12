@@ -6,18 +6,18 @@ import java.util.Date;
 	public class Comment implements Serializable {
 		private static final long serialVersionUID = 1L;
 
-		private int comment_id;
+		private int id;
 		private int user_id;
 		private int posting_id;
 		private String text;
 		private Date insert_date;
 		private Date update_date;
 
-		public int getCommnetsId() {
-			return comment_id;
+		public int getId() {
+			return id;
 		}
-		public void setCommnetsId(int comment_id) {
-			this.comment_id = comment_id;
+		public void setId(int id) {
+			this.id = id;
 		}
 
 		public int getUserId() {

@@ -47,15 +47,8 @@
 						<c:out value="${ branch.name }" />
 					</option>
 				</c:forEach>
-
-<%--				<c:forEach items="${ branchList }" var="branch">
-					<option value="${ branch.id }">${ branch.name }</option>
-				</c:forEach>
---%>
 			</select>
-	</c:if>
-
-<br />
+	</c:if><br />
 
 	<c:if test = "${ editUser.id != loginUser.id }">
 		<label for = "position">所属部署・役職</label><br />
@@ -66,11 +59,6 @@
 						<c:out value="${ position.name }" />
 					</option>
 				</c:forEach>
-
-<%--				<c:forEach items="${ positionList }" var="position">
-					<option value="${ position.id }">${ position.name }</option>
-				</c:forEach>
---%>
 			</select><br />
 	</c:if>
 

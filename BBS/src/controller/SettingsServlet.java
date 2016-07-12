@@ -29,12 +29,23 @@ public class SettingsServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
+		List<String> messages = new ArrayList<String>();
+
 		HttpSession session = request.getSession();
 
-		int userId = (Integer.parseInt(request.getParameter("userId")));
+		if (request.getParameter("userId") != null) {
 
-		User editUser = new UserService().getUser(userId);
-		session.setAttribute("editUser", editUser);
+			int userId = (Integer.parseInt(request.getParameter("userId")));
+
+			User editUser = new UserService().getUser(userId);
+			session.setAttribute("editUser", editUser);
+
+		} else {
+			messages.add("不正なIDが選択されました。");
+			session.setAttribute("errorMessages", messages);
+			response.sendRedirect("userControl");
+			return;
+		}
 
 		List<Branches> branchList = new BranchService().select();
 		List<Positions> positionList = new PositionService().select();
@@ -93,6 +104,7 @@ public class SettingsServlet extends HttpServlet {
 	}
 
 	private boolean isValid(HttpServletRequest request, List<String> messages) {
+
 		String userId = request.getParameter("userId");
 		String password = request.getParameter("password");
 		String passwordCheck = request.getParameter("passwordCheck");

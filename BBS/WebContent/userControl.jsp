@@ -17,7 +17,7 @@
 	<div class="errorMessages">
 		<ul>
 			<c:forEach items="${ errorMessages }" var="message">
-				<c:out value="${ message }" />
+				<li><c:out value="${ message }" />
 			</c:forEach>
 		</ul>
 	</div>
@@ -76,6 +76,12 @@
 					<input type="submit" value="アカウントを停止" onClick = "return confirm('このユーザーアカウントを停止します。よろしいですか？')">
 				</c:if>
 			</form>
+				<c:if test = "${ user.id != loginUser.id }">
+					<form action = "deleteUser" method = "post">
+						<input type='hidden' value = "${ user.id }" name='id'>
+						<input type = "submit" value="アカウント削除" onClick = "return confirm('このユーザーアカウントを削除します。よろしいですか？')">
+					</form>
+					</c:if>
 			<a href="settings?userId=${ user.id }">ユーザー編集</a><br/>
 			<br />
 		</div>
