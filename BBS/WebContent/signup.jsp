@@ -27,7 +27,7 @@
 <form action="signup" method="post">
 
 	<label for="userId">ユーザーID</label><br />
-	<input name="userId" id="userId"/><br />
+	<input name="userId" value="${user.userId}" id="userId"/><br />
 
 	<label for="password">パスワード</label><br />
 	<input name="password" type="password" id="password"/> <br />
@@ -36,20 +36,40 @@
 	<input name="passwordCheck" type="password" id="password"/> <br />
 
 	<label for="name">ユーザー名</label><br />
-	<input name="name" id="name"/><br />
+	<input name="name" value="${user.name}" id="name"/><br />
 
 	<label for="branch">所属支店</label><br />
 	<select name="branch">
-		<c:forEach items="${ branchList }" var="branch">
-			<option value="${ branch.id }">${ branch.name }</option>
+		<option value="0">--選択してください--</option>
+			<c:forEach items="${ branchList }" var="branch">
+				<option value="${ branch.id }" <c:if test="${ branch.id == user.branchId }">selected</c:if> >
+					<c:out value="${ branch.name }" />
+				</option>
+			</c:forEach>
+
+<%--		<c:forEach items="${ branchList }" var="branch">
+			<option value="${ branch.id }">
+				<c:out value="${ branch.name }" />
+			</option>
 		</c:forEach>
+--%>
 	</select><br />
 
 	<label for="position">所属部署・役職</label><br />
 	<select name="position">
+	<option value="0">--選択してください--</option>
 		<c:forEach items="${ positionList }" var="position">
-			<option value="${ position.id }">${ position.name }</option>
+			<option value="${ position.id }" <c:if test="${ position.id == user.positionId }">selected</c:if> >
+				<c:out value="${ position.name }" />
+			</option>
 		</c:forEach>
+
+<%--		<c:forEach items="${ positionList }" var="position">
+			<option value="${ position.id }">
+				<c:out value="${ position.name }" />
+			</option>
+		</c:forEach>
+--%>
 	</select><br />
 
 	<input type="submit" value="登録" /> <br />

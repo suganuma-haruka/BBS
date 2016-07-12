@@ -41,21 +41,39 @@
 	<c:if test = "${ editUser.id != loginUser.id }">
 		<label for = "branch">所属支店</label><br />
 		 	<select name="branch">
+		 		<option value="0">--選択してください--</option>
 				<c:forEach items="${ branchList }" var="branch">
+					<option value="${ branch.id }" <c:if test="${ branch.id == editUser.branchId }">selected</c:if> >
+						<c:out value="${ branch.name }" />
+					</option>
+				</c:forEach>
+
+<%--				<c:forEach items="${ branchList }" var="branch">
 					<option value="${ branch.id }">${ branch.name }</option>
 				</c:forEach>
+--%>
 			</select>
 	</c:if>
+
 <br />
 
 	<c:if test = "${ editUser.id != loginUser.id }">
 		<label for = "position">所属部署・役職</label><br />
 			<select name="position">
+			<option value="0">--選択してください--</option>
 				<c:forEach items="${ positionList }" var="position">
+					<option value="${ position.id }" <c:if test="${ position.id == editUser.positionId }">selected</c:if> >
+						<c:out value="${ position.name }" />
+					</option>
+				</c:forEach>
+
+<%--				<c:forEach items="${ positionList }" var="position">
 					<option value="${ position.id }">${ position.name }</option>
 				</c:forEach>
+--%>
 			</select><br />
 	</c:if>
+
 	<input type='hidden' value="${ editUser.id }" name='id'>
 	<input type="submit" value="編集" />
 	</form>

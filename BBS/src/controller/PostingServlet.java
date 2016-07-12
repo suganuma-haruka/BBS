@@ -55,7 +55,8 @@ public class PostingServlet extends HttpServlet {
 			response.sendRedirect("home");
 		} else {
 			session.setAttribute("errorMessages", messages);
-			response.sendRedirect("posting");
+			request.setAttribute("posting", posting);
+			request.getRequestDispatcher("posting.jsp").forward(request, response);
 		}
 	}
 

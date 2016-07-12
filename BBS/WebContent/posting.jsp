@@ -26,13 +26,13 @@
 
 <form action="posting" method="post">
 	<label for="title">件名 (50文字以下)</label><br />
-	<input name="title" id="title"/> <br />
+	<input name="title" value="${ posting.title }" id="title"/> <br />
 
 	<label for="text">本文 (1,000文字以下)</label><br />
-	<textarea name="text" cols="50" rows="5" id="text"></textarea> <br />
+	<textarea name="text" cols="50" rows="5" id="text"><c:out value="${ posting.text }" /></textarea> <br />
 
 	<label for="category">カテゴリ (10文字以下)</label><br />
-	<input name="category" id="category"/> <br />
+	<input name="category" value="${ posting.category }" id="category"/><br />
 
 	<input type="submit" value="投稿" /> <br />
 </form>

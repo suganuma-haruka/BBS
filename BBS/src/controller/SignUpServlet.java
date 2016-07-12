@@ -42,6 +42,8 @@ public class SignUpServlet extends HttpServlet {
 			HttpServletResponse response) throws IOException, ServletException {
 
 		List<String> messages = new ArrayList<String>();
+		List<Branches> branchList = new BranchService().select();
+		List<Positions> positionList = new PositionService().select();
 
 		HttpSession session = request.getSession();
 
@@ -63,8 +65,10 @@ public class SignUpServlet extends HttpServlet {
 			response.sendRedirect("home");
 		} else {
 			session.setAttribute("errorMessages", messages);
-			session.setAttribute("user", user);
-			response.sendRedirect("signup");
+			request.setAttribute("user", user);
+			request.setAttribute("branchList", branchList);
+			request.setAttribute("positionList", positionList);
+			request.getRequestDispatcher("signup.jsp").forward(request, response);
 		}
 	}
 

@@ -50,6 +50,9 @@ public class SettingsServlet extends HttpServlet {
 
 		List<String> messages = new ArrayList<String>();
 
+		List<Branches> branchList = new BranchService().select();
+		List<Positions> positionList = new PositionService().select();
+
 		HttpSession session = request.getSession();
 
 		User editUser = new User();
@@ -81,7 +84,10 @@ public class SettingsServlet extends HttpServlet {
 			response.sendRedirect("userControl");
 		} else {
 			session.setAttribute("errorMessages", messages);
-			response.sendRedirect("settings");
+			request.setAttribute("editUser", editUser);
+			request.setAttribute("branchList", branchList);
+			request.setAttribute("positionList", positionList);
+			request.getRequestDispatcher("settings.jsp").forward(request, response);
 //			System.out.println(editUser);
 		}
 	}
