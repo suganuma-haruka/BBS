@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 import beans.User;
 import exception.NoRowsUpdatedRuntimeException;
 import exception.SQLRuntimeException;
@@ -27,6 +29,7 @@ public class UserDao {
 
 			ResultSet rs = ps.executeQuery();
 			List<User> userList = toUserList(rs);
+
 			if (userList.isEmpty() == true) {
 				return null;
 			} else if (2 <= userList.size()) {
@@ -34,6 +37,7 @@ public class UserDao {
 			} else {
 				return userList.get(0);
 			}
+
 		} catch (SQLException e) {
 			throw new SQLRuntimeException(e);
 		} finally {
@@ -64,6 +68,7 @@ public class UserDao {
 				ret.add(user);
 			}
 			return ret;
+
 		} finally {
 			close(rs);
 		}
@@ -75,19 +80,19 @@ public class UserDao {
 		try {
 			StringBuilder sql = new StringBuilder();
 			sql.append("INSERT INTO users ( ");
-			sql.append("user_id, ");
-			sql.append("password, ");
-			sql.append("name, ");
-			sql.append("branch_id, ");
-			sql.append("position_id, ");
-			sql.append("state");
+			sql.append(" user_id, ");
+			sql.append(" password, ");
+			sql.append(" name, ");
+			sql.append(" branch_id, ");
+			sql.append(" position_id, ");
+			sql.append(" state");
 			sql.append(") VALUES (");
-			sql.append("?, "); // user_id
-			sql.append("?, "); // password
-			sql.append("?, "); // name
-			sql.append("?, "); // branch_id
-			sql.append("?, "); // position_id
-			sql.append("1"); // state
+			sql.append(" ?, "); // user_id
+			sql.append(" ?, "); // password
+			sql.append(" ?, "); // name
+			sql.append(" ?, "); // branch_id
+			sql.append(" ?, "); // position_id
+			sql.append(" 1"); // state
 			sql.append(")");
 
 			ps = connection.prepareStatement(sql.toString());
@@ -112,35 +117,55 @@ public class UserDao {
 		PreparedStatement ps = null;
 		try {
 			StringBuilder sql = new StringBuilder();
-			sql.append("UPDATE users SET");
-			sql.append(" user_id = ?,");
-			sql.append(" password= ?,");
-			sql.append(" name= ?,");
-			sql.append(" branch_id= ?,");
-			sql.append(" position_id= ?");
-			sql.append(" WHERE");
-			sql.append(" id = ?");
+			if (StringUtils.isEmpty(user.getPassword())) {
+				sql.append("UPDATE users SET");
+				sql.append(" user_id = ?,");
+				sql.append(" password= ?,");
+				sql.append(" name= ?,");
+				sql.append(" branch_id= ?,");
+				sql.append(" position_id= ?");
+				sql.append(" WHERE");
+				sql.append(" id = ?");
 
-			ps = connection.prepareStatement(sql.toString());
+				ps = connection.prepareStatement(sql.toString());
 
-			ps.setString(1, user.getUserId());
-			ps.setString(2, user.getPassword());
-			ps.setString(3, user.getName());
-			ps.setInt(4, user.getBranchId());
-			ps.setInt(5, user.getPositionId());
-			ps.setInt(6, user.getId());
+				ps.setString(1, user.getUserId());
+				ps.setString(2, user.getPassword());
+				ps.setString(3, user.getName());
+				ps.setInt(4, user.getBranchId());
+				ps.setInt(5, user.getPositionId());
+				ps.setInt(6, user.getId());
+			} else {
+				sql.append("UPDATE users SET");
+				sql.append(" user_id = ?,");
+				sql.append(" name = ?,");
+				sql.append(" branch_id = ?,");
+				sql.append(" position_id = ?");
+				sql.append(" WHERE");
+				sql.append(" id = ?");
+
+				ps = connection.prepareStatement(sql.toString());
+
+				ps.setString(1, user.getUserId());
+				ps.setString(2, user.getName());
+				ps.setInt(3, user.getBranchId());
+				ps.setInt(4, user.getPositionId());
+				ps.setInt(5, user.getId());
+			}
 
 			int count = ps.executeUpdate();
 
 			if (count == 0) {
 				throw new NoRowsUpdatedRuntimeException();
 			}
+
 		} catch (SQLException e) {
 			throw new SQLRuntimeException(e);
 		} finally {
 			close(ps);
 		}
 	}
+
 
 	public User getUser(Connection connection, int id) {
 
@@ -153,6 +178,7 @@ public class UserDao {
 
 			ResultSet rs = ps.executeQuery();
 			List<User> userList = toUserList(rs);
+
 			if (userList.isEmpty() == true) {
 				return null;
 			} else if (2 <= userList.size()) {
@@ -160,6 +186,7 @@ public class UserDao {
 			} else {
 				return userList.get(0);
 			}
+
 		} catch (SQLException e) {
 			throw new SQLRuntimeException(e);
 		} finally {
@@ -178,7 +205,9 @@ public class UserDao {
 
 			ResultSet rs = ps.executeQuery();
 			List<User> ret = toUsersList(rs);
+
 			return ret;
+
 		} catch (SQLException e) {
 			throw new SQLRuntimeException(e);
 		} finally {
@@ -215,6 +244,7 @@ public class UserDao {
 				ret.add(users);
 			}
 			return ret;
+
 		} finally {
 			close(rs);
 		}
@@ -235,6 +265,7 @@ public class UserDao {
 			if ((ps.executeUpdate()) == 0) {
 				throw new NoRowsUpdatedRuntimeException();
 			}
+
 		} catch(SQLException e) {
 			throw new SQLRuntimeException(e);
 		} finally {
@@ -250,13 +281,111 @@ public class UserDao {
 			sql.append("DELETE FROM users WHERE id = ?");
 			ps = connection.prepareStatement(sql.toString());
 			ps.setInt(1, id);
+
 			if ((ps.executeUpdate()) == 0) {
 				throw new NoRowsUpdatedRuntimeException();
 			}
+
 		} catch(SQLException e) {
 			throw new SQLRuntimeException(e);
 		} finally {
 			close(ps);
 		}
 	}
+
+	public User userCheck(Connection connection, String userId, int id) {
+
+		PreparedStatement ps = null;
+		try {
+			String sql = "SELECT * FROM users WHERE user_id = ? AND id != ? ";
+
+			ps = connection.prepareStatement(sql);
+			ps.setString(1, userId);
+			ps.setInt(2, id);
+
+			ResultSet rs = ps.executeQuery();
+			List<User> userCheckList = toUserCheckList(rs);
+
+			if (userCheckList.isEmpty()) {
+				return null;
+			} else if (2 <= userCheckList.size()) {
+				throw new IllegalStateException("2 <= userList.size()");
+			} else {
+				return userCheckList.get(0);
+			}
+
+		} catch (SQLException e) {
+			throw new SQLRuntimeException(e);
+		} finally {
+			close(ps);
+		}
+	}
+
+	private List<User> toUserCheckList(ResultSet rs) throws SQLException {
+
+		List<User> ret = new ArrayList<User>();
+		try {
+			while (rs.next()) {
+				String userId = rs.getString("user_id");
+				int id = rs.getInt("id");
+
+				User user = new User();
+				user.setUserId(userId);
+				user.setId(id);
+
+				ret.add(user);
+			}
+			return ret;
+
+		} finally {
+			close(rs);
+		}
+	}
+
+	public User userIdCheck(Connection connection, String userId) {
+
+		PreparedStatement ps = null;
+		try {
+			String sql = "SELECT * FROM users WHERE user_id = ? ";
+
+			ps = connection.prepareStatement(sql);
+			ps.setString(1, userId);
+
+			ResultSet rs = ps.executeQuery();
+			List<User> userCheckList = toUserIdCheckList(rs);
+
+			if (userCheckList.isEmpty() == true) {
+				return null;
+			} else if (2 <= userCheckList.size()) {
+				throw new IllegalStateException("2 <= userList.size()");
+			} else {
+				return userCheckList.get(0);
+			}
+
+		} catch (SQLException e) {
+			throw new SQLRuntimeException(e);
+		} finally {
+			close(ps);
+		}
+	}
+
+	private List<User> toUserIdCheckList(ResultSet rs) throws SQLException {
+
+		List<User> ret = new ArrayList<User>();
+		try {
+			while (rs.next()) {
+				String userId = rs.getString("user_id");
+
+				User user = new User();
+				user.setUserId(userId);
+
+				ret.add(user);
+			}
+			return ret;
+
+		} finally {
+			close(rs);
+		}
+	}
+
 }

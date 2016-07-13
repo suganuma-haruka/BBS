@@ -52,11 +52,14 @@ public class CommentServlet extends HttpServlet {
 			session.setAttribute("completeMessage", complete);
 
 			response.sendRedirect("home");
+
 		} else {
+
 			session.setAttribute("errorMessages", messages);
 			session.setAttribute("comments", comment);
 			response.sendRedirect("home");
 		}
+
 	}
 
 	private boolean isValid(HttpServletRequest request, List<String> messages) {
@@ -75,6 +78,6 @@ public class CommentServlet extends HttpServlet {
 		} else {
 			return false;
 		}
-
 	}
+
 }

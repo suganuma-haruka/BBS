@@ -38,6 +38,7 @@ public class CommentDao {
 			ps.setString(3, comment.getText());
 
 			ps.executeUpdate();
+
 		} catch (SQLException e) {
 			throw new SQLRuntimeException(e);
 		} finally {
@@ -54,8 +55,10 @@ public class CommentDao {
 			ps = connection.prepareStatement(sql.toString());
 			ps.setInt(1, id);
 			if ((ps.executeUpdate()) == 0) {
+
 				throw new NoRowsUpdatedRuntimeException();
 			}
+
 		} catch(SQLException e) {
 			throw new SQLRuntimeException(e);
 		} finally {

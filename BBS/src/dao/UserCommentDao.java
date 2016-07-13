@@ -28,6 +28,7 @@ public class UserCommentDao {
 			ResultSet rs = ps.executeQuery();
 			List<UserComment> ret = toUserCommentList(rs);
 			return ret;
+
 		} catch (SQLException e) {
 			throw new SQLRuntimeException(e);
 		} finally {
@@ -63,6 +64,7 @@ public class UserCommentDao {
 				ret.add(comment);
 			}
 			return ret;
+
 		} finally {
 			close(rs);
 		}

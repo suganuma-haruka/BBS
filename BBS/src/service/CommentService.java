@@ -24,6 +24,7 @@ public class CommentService {
 			commentDao.insert(connection, comment);
 
 			commit(connection);
+
 		} catch (RuntimeException e) {
 			rollback(connection);
 			throw e;
@@ -49,6 +50,7 @@ public class CommentService {
 			commit(connection);
 
 			return ret;
+
 		} catch (RuntimeException e) {
 			rollback(connection);
 			throw e;
@@ -65,7 +67,9 @@ public class CommentService {
 		Connection connection = getConnection();
 		try{
 			new CommentDao().deleteComment(connection, id);
+
 			commit(connection);
+
 		}catch(RuntimeException e){
 			rollback(connection);
 			throw e;
@@ -75,6 +79,6 @@ public class CommentService {
 		}finally{
 			close(connection);
 		}
-
 	}
+
 }

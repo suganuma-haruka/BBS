@@ -24,6 +24,7 @@ public class UserService {
 			userDao.insert(connection, user);
 
 			commit(connection);
+
 		} catch (RuntimeException e) {
 			rollback(connection);
 			throw e;
@@ -40,14 +41,15 @@ public class UserService {
 		Connection connection = null;
 		try {
 			connection = getConnection();
+			UserDao userDao = new UserDao();
 
 			String encPassword = CipherUtil.encrypt(user.getPassword());
 			user.setPassword(encPassword);
 
-			UserDao userDao = new UserDao();
 			userDao.update(connection, user);
 
 			commit(connection);
+
 		} catch (RuntimeException e) {
 			rollback(connection);
 			throw e;
@@ -71,6 +73,7 @@ public class UserService {
 			commit(connection);
 
 			return user;
+
 		} catch (RuntimeException e) {
 			rollback(connection);
 			throw e;
@@ -107,7 +110,9 @@ public class UserService {
 		Connection connection = getConnection();
 		try {
 			new UserDao().deleteUser(connection, id);
+
 			commit(connection);
+
 		} catch(RuntimeException e) {
 			rollback(connection);
 			throw e;
@@ -117,6 +122,54 @@ public class UserService {
 		} finally {
 			close(connection);
 		}
-
 	}
+
+	public User userCheck(String userId, int id) {
+
+		Connection connection = null;
+		try {
+			connection = getConnection();
+
+			UserDao userDao = new UserDao();
+			User user = userDao.userCheck(connection, userId, id);
+
+			commit(connection);
+
+			return user;
+
+		} catch (RuntimeException e) {
+			rollback(connection);
+			throw e;
+		} catch (Error e) {
+			rollback(connection);
+			throw e;
+		} finally {
+			close(connection);
+		}
+	}
+
+	public User userIdCheck(String userId) {
+
+		Connection connection = null;
+		try {
+			connection = getConnection();
+
+			UserDao userDao = new UserDao();
+			User user = userDao.userIdCheck(connection, userId);
+
+			commit(connection);
+
+			return user;
+
+		} catch (RuntimeException e) {
+			rollback(connection);
+			throw e;
+		} catch (Error e) {
+			rollback(connection);
+			throw e;
+		} finally {
+			close(connection);
+		}
+	}
+
 }

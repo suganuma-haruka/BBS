@@ -64,6 +64,7 @@ public class SignUpServlet extends HttpServlet {
 
 			response.sendRedirect("home");
 		} else {
+
 			session.setAttribute("errorMessages", messages);
 			request.setAttribute("user", user);
 			request.setAttribute("branchList", branchList);
@@ -73,6 +74,7 @@ public class SignUpServlet extends HttpServlet {
 	}
 
 	private boolean isValid(HttpServletRequest request, List<String> messages) {
+
 		String userId = request.getParameter("userId");
 		String password = request.getParameter("password");
 		String passwordCheck = request.getParameter("passwordCheck");
@@ -80,10 +82,16 @@ public class SignUpServlet extends HttpServlet {
 		int branch = Integer.parseInt(request.getParameter("branch"));
 		int position = Integer.parseInt(request.getParameter("position"));
 
+		UserService userCheck = new UserService();
+		User user = userCheck.userIdCheck(userId);
+
 		if (StringUtils.isEmpty(userId) == true) {
 			messages.add("ログインIDを入力してください。");
 		} else if (!userId.matches("^[0-9a-zA-Z]{6,20}")) {
 			messages.add("ログインIDは半角英数字6桁以上20桁以下で入力してください。");
+		}
+		if(user != null)  {
+			messages.add("このログインIDは既に使用されています");
 		}
 
 		if (StringUtils.isEmpty(password) == true || StringUtils.isEmpty(passwordCheck) == true) {

@@ -13,7 +13,6 @@ import dao.UserPostingDao;
 
 public class PostingService {
 
-
 	public void register(Posting posting) {
 
 		Connection connection = null;
@@ -24,6 +23,7 @@ public class PostingService {
 			postingDao.insert(connection, posting);
 
 			commit(connection);
+
 		} catch (RuntimeException e) {
 			rollback(connection);
 			throw e;
@@ -49,6 +49,7 @@ public class PostingService {
 			commit(connection);
 
 			return posting;
+
 		} catch (RuntimeException e) {
 			rollback(connection);
 			throw e;
@@ -65,7 +66,9 @@ public class PostingService {
 		Connection connection = getConnection();
 		try{
 			new PostingDao().deletePosting(connection, id);
+
 			commit(connection);
+
 		}catch(RuntimeException e){
 			rollback(connection);
 			throw e;
@@ -75,7 +78,6 @@ public class PostingService {
 		}finally{
 			close(connection);
 		}
-
 	}
 
 }

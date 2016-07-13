@@ -35,4 +35,5 @@ public class ChangeStateServlet extends HttpServlet {
 //		session.setAttribute("userList", userList);
 		response.sendRedirect("userControl");
 	}
+
 }

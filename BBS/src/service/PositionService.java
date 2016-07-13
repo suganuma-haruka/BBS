@@ -9,7 +9,6 @@ import java.util.List;
 import beans.Positions;
 import dao.PositionDao;
 
-
 public class PositionService {
 
 	public List<Positions> select() {
@@ -35,4 +34,5 @@ public class PositionService {
 			close(connection);
 		}
 	}
+
 }

@@ -46,6 +46,7 @@ public class PositionDao {
 				PositionList.add(position);
 			}
 			return PositionList;
+
 		} catch (SQLException e) {
 			throw new SQLRuntimeException(e);
 		}

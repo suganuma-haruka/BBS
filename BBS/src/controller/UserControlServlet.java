@@ -56,4 +56,5 @@ public class UserControlServlet extends HttpServlet {
 			response.sendRedirect("home");
 		}
 	}
+
 }

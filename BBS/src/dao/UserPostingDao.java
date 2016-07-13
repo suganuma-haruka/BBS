@@ -27,7 +27,9 @@ public class UserPostingDao {
 
 			ResultSet rs = ps.executeQuery();
 			List<UserPosting> userPosting = toUserPostingList(rs);
+
 			return userPosting;
+
 		} catch (SQLException e) {
 			throw new SQLRuntimeException(e);
 		} finally {
@@ -65,8 +67,10 @@ public class UserPostingDao {
 				userPostingList.add(posting);
 			}
 			return userPostingList;
+
 		} finally {
 			close(rs);
 		}
 	}
+
 }

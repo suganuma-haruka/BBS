@@ -41,6 +41,7 @@ public class PostingDao {
 			ps.setString(4, posting.getCategory());
 
 			ps.executeUpdate();
+
 		} catch(SQLException e) {
 			throw new SQLRuntimeException(e);
 		}
@@ -57,10 +58,12 @@ public class PostingDao {
 			if ((ps.executeUpdate()) == 0) {
 				throw new NoRowsUpdatedRuntimeException();
 			}
+
 		} catch(SQLException e) {
 			throw new SQLRuntimeException(e);
 		} finally {
 			close(ps);
 		}
 	}
+
 }

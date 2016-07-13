@@ -46,6 +46,7 @@ public class BranchDao {
 				BranchList.add(branch);
 			}
 			return BranchList;
+
 		} catch (SQLException e) {
 			throw new SQLRuntimeException(e);
 		}

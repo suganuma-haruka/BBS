@@ -33,14 +33,22 @@ public class SettingsServlet extends HttpServlet {
 
 		HttpSession session = request.getSession();
 
-		if (request.getParameter("userId") != null) {
+		try {
+			if (request.getParameter("userId") != null) {
 
-			int userId = (Integer.parseInt(request.getParameter("userId")));
+				int userId = (Integer.parseInt(request.getParameter("userId")));
 
-			User editUser = new UserService().getUser(userId);
-			session.setAttribute("editUser", editUser);
+				User editUser = new UserService().getUser(userId);
+				session.setAttribute("editUser", editUser);
+			} else {
 
-		} else {
+				messages.add("不正なIDが選択されました。");
+				session.setAttribute("errorMessages", messages);
+				response.sendRedirect("userControl");
+				return;
+			}
+		} catch (NumberFormatException e) {
+
 			messages.add("不正なIDが選択されました。");
 			session.setAttribute("errorMessages", messages);
 			response.sendRedirect("userControl");
@@ -81,12 +89,14 @@ public class SettingsServlet extends HttpServlet {
 				new UserService().update(editUser);
 
 			} catch (NoRowsUpdatedRuntimeException e) {
+
 				session.removeAttribute("editUser");
 				messages.add("他の人によって更新されています。最新のデータを表示しました。データを確認してください。");
 				session.setAttribute("errorMessages", messages);
 				response.sendRedirect("settings");
 				return;
 			}
+
 			List<String> complete = new ArrayList<String>();
 			complete.add("正常にユーザー編集が完了しました。");
 			session.setAttribute("completeMessage", complete);
@@ -94,6 +104,7 @@ public class SettingsServlet extends HttpServlet {
 			session.setAttribute("editUser", editUser);
 			response.sendRedirect("userControl");
 		} else {
+
 			session.setAttribute("errorMessages", messages);
 			request.setAttribute("editUser", editUser);
 			request.setAttribute("branchList", branchList);
@@ -112,20 +123,27 @@ public class SettingsServlet extends HttpServlet {
 		int branch = Integer.parseInt(request.getParameter("branch"));
 		int position = Integer.parseInt(request.getParameter("position"));
 
+		int id = Integer.valueOf(request.getParameter("id"));
+		UserService userCheck = new UserService();
+		User user = userCheck.userCheck(userId, id);
+
 		if (StringUtils.isEmpty(userId) == true) {
 			messages.add("ログインIDを入力してください。");
 		} else if (!userId.matches("^[0-9a-zA-Z]{6,20}")) {
 			messages.add("ログインIDは半角英数字6桁以上20桁以下で入力してください。");
 		}
+		if(user != null){
+			messages.add("このログインIDは既に使用されています");
+		}
 
-		if (StringUtils.isEmpty(password) == true || StringUtils.isEmpty(passwordCheck) == true) {
-			messages.add("パスワードを入力してください。");
-		} else if (password.matches("^[a-zA-Z0-9 -/:-@\\[-\\`\\{-\\~]")) {
-			messages.add("パスワードは半角文字のみで入力してください。");
-		} else if (password.matches("{6,255}$")) {
-			messages.add("パスワードは6文字以上255文字以下で入力してください。");
-		} else if (password.equals(passwordCheck) == false) {
-			messages.add("入力されたパスワードが一致しません。");
+		if(!StringUtils.isEmpty(password)) {
+			if (password.matches("^[a-zA-Z0-9 -/:-@\\[-\\`\\{-\\~]")) {
+				messages.add("パスワードは半角文字のみで入力してください。");
+			} else if (password.matches("{6,255}$")) {
+				messages.add("パスワードは6文字以上255文字以下で入力してください。");
+			} else if (password.equals(passwordCheck) == false) {
+				messages.add("入力されたパスワードが一致しません。");
+			}
 		}
 
 		if (StringUtils.isEmpty(name) == true) {
@@ -148,7 +166,6 @@ public class SettingsServlet extends HttpServlet {
 		}else{
 			return false;
 		}
-
 	}
 
 }

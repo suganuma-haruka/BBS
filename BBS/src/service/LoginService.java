@@ -25,6 +25,7 @@ public class LoginService {
 			commit(connection);
 
 			return user;
+
 		} catch (RuntimeException e) {
 			rollback(connection);
 			throw e;
@@ -50,6 +51,7 @@ public class LoginService {
 			commit(connection);
 
 			return ret;
+
 		} catch (RuntimeException e) {
 			rollback(connection);
 			throw e;

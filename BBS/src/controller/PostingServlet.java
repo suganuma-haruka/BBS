@@ -54,6 +54,7 @@ public class PostingServlet extends HttpServlet {
 
 			response.sendRedirect("home");
 		} else {
+
 			session.setAttribute("errorMessages", messages);
 			request.setAttribute("posting", posting);
 			request.getRequestDispatcher("posting.jsp").forward(request, response);
@@ -81,10 +82,10 @@ public class PostingServlet extends HttpServlet {
 		}
 
 		if (StringUtils.isEmpty(category) == true) {
-			messages.add("カテゴリを入力してください。");
+			messages.add("カテゴリーを入力してください。");
 		}
 		if (10 < category.length()) {
-			messages.add("カテゴリは10文字以下で入力してください。");
+			messages.add("カテゴリーは10文字以下で入力してください。");
 		}
 
 		if (messages.size() == 0) {
