@@ -17,7 +17,7 @@
 	<div class="errorMessages">
 		<ul>
 			<c:forEach items="${ errorMessages }" var="message">
-				<li><c:out value="${ message }" />
+				<font color="red"><li>エラー：<c:out value="${ message }" /></font>
 			</c:forEach>
 		</ul>
 	</div>
@@ -25,7 +25,7 @@
 </c:if>
 
 <form action="login" method="post"><br />
-	<label for="user_id">ユーザーID</label><br />
+	<label for="user_id">ログインID</label><br />
 	<input name="user_id" value="${ loginUser.userId }" id="user_id"/> <br />
 
 	<label for="password">パスワード</label><br />

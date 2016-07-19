@@ -17,7 +17,7 @@
 	<div class="errorMessages">
 		<ul>
 			<c:forEach items="${ errorMessages }" var="message">
-				<li><c:out value="${ message }" />
+				<font color="red"><li>エラー：<c:out value="${ message }" /></font>
 			</c:forEach>
 		</ul>
 	</div>
@@ -28,7 +28,7 @@
 	<div class="completeMessage">
 		<ul>
 			<c:forEach items="${ completeMessage }" var="complet">
-				<li><c:out value="${ complet }" />
+				<font color="green"><li>成功：<c:out value="${ complet }" /></font>
 			</c:forEach>
 		</ul>
 	</div>
@@ -38,16 +38,18 @@
 
 <div class="header">
 	<h3>・メニュー</h3>
+	<a href="home">ホーム画面</a>
 	<a href="signup">ユーザー新規登録</a>
 </div>
 <br />
 
 <h3>・登録済みユーザー一覧</h3>
 <div class="userControlList">
+<table>
 	<c:forEach items="${ userControlList }" var="user">
 		<div class="setting">
 			<div class="account-name">
-				<span class="userId">【ユーザーID】：<c:out value="${ user.userId }" /></span><br/>
+				<span class="userId">【ログインID】：<c:out value="${ user.userId }" /></span><br/>
 
 				<span class="name">【ユーザー名】：<c:out value="${ user.name }" /></span><br/>
 
@@ -81,16 +83,14 @@
 				<form action = "deleteUser" method = "post">
 					<input type='hidden' value = "${ user.id }" name='id'>
 					<input type = "submit" value="アカウント削除" onClick = "return confirm('このユーザーアカウントを削除します。よろしいですか？')">
-				</form>
+				</form></br>
 			</c:if>
 			<a href="settings?userId=${ user.id }">ユーザー編集</a><br/>
 			<br />
 		</div>
 	</c:forEach>
-<div class="header">
-	<a href="home">戻る</a><br />
+</table>
 </div>
 <div class="copyright">Copyright(c) Haruka Suganuma</div>
-</div>
 </body>
 </html>

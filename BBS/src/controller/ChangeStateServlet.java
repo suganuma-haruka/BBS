@@ -29,10 +29,6 @@ public class ChangeStateServlet extends HttpServlet {
 		List<User> userControlList =  loginService.UserCotrolList();
 
 		request.setAttribute("userControlList", userControlList);
-//		List<User> userList =  new UserService().getUserList();
-//		HttpSession session = request.getSession();
-//
-//		session.setAttribute("userList", userList);
 		response.sendRedirect("userControl");
 	}
 

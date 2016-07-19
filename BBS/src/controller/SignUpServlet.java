@@ -62,7 +62,7 @@ public class SignUpServlet extends HttpServlet {
 			complete.add("正常に新規ユーザーが登録されました。");
 			session.setAttribute("completeMessage", complete);
 
-			response.sendRedirect("home");
+			response.sendRedirect("userControl");
 		} else {
 
 			session.setAttribute("errorMessages", messages);

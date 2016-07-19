@@ -17,16 +17,23 @@
 	<div class="errorMessages">
 		<ul>
 			<c:forEach items="${errorMessages}" var="message">
-				<li><c:out value="${message}" />
+				<font color="red"><li>エラー：<c:out value="${message}" /></font>
 			</c:forEach>
 		</ul>
 	</div>
 	<c:remove var="errorMessages" scope="session"/>
 </c:if>
 
+<div class="header">
+	<h3>・メニュー</h3>
+		<a href="home">ホーム画面</a>
+		<a href="userControl">ユーザー管理画面</a>
+</div><br />
+
+<h3>・ユーザー新規登録</h3>
 <form action="signup" method="post">
 
-	<label for="userId">ユーザーID</label><br />
+	<label for="userId">ログインID</label><br />
 	<input name="userId" value="${user.userId}" id="userId"/><br />
 
 	<label for="password">パスワード</label><br />
@@ -74,7 +81,6 @@
 
 	<input type="submit" value="登録" /> <br />
 <br />
-	<a href="userControl">戻る</a>
 </form>
 <div class="copyright">Copyright(c) Haruka Suganuma</div>
 </div>

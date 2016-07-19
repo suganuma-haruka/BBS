@@ -17,16 +17,23 @@
 	<div class="errorMessages">
 		<ul>
 			<c:forEach items="${errorMessages}" var="messages">
-				<li><c:out value="${ messages }" />
+				<font color="red"><li>エラー：<c:out value="${ messages }" /></font>
 			</c:forEach>
 		</ul>
 	</div>
 	<c:remove var="errorMessages" scope="session"/>
 </c:if>
 
+<div class="header">
+	<h3>・メニュー</h3>
+		<a href="home">ホーム画面</a>
+		<a href="userControl">ユーザー管理画面</a>
+</div><br />
+
+<h3>・ユーザー編集</h3>
 <form action="settings" method="post" >
 
-	<label for="userId">ユーザーID</label><br />
+	<label for="userId">ログインID</label><br />
 	<input name="userId" value="${ editUser.userId }" id="userId"/>(半角英数字、6文字以上20文字以内)<br />
 
 	<label for="password">パスワード</label><br />
@@ -38,6 +45,7 @@
   	<label for="name">ユーザー名</label><br />
 	<input name="name" value="${ editUser.name }" id="name"/>(10文字以内)<br />
 
+<c:if test = "${ editUser.id != loginUser.id }">
 	<label for = "branch">所属支店</label><br />
 	 	<select name="branch">
 	 		<option value="0">--選択してください--</option>
@@ -47,7 +55,8 @@
 				</option>
 			</c:forEach>
 		</select><br />
-
+</c:if>
+<c:if test = "${ editUser.id != loginUser.id }">
 	<label for = "position">所属部署・役職</label><br />
 		<select name="position">
 		<option value="0">--選択してください--</option>
@@ -57,14 +66,11 @@
 				</option>
 			</c:forEach>
 		</select><br />
-
+</c:if>
 	<input type='hidden' value="${ editUser.id }" name='id'>
 	<input type="submit" value="編集" />
 	</form>
 <br />
-<div class="header">
-	<a href="userControl">戻る</a><br />
 <div class="copyright">Copyright(c) Haruka Suganuma</div>
-</div>
 </body>
 </html>

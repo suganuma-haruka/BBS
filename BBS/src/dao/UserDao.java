@@ -24,6 +24,7 @@ public class UserDao {
 			String sql = "SELECT * FROM users WHERE user_id = ? AND password = ? AND state = 1";
 
 			ps = connection.prepareStatement(sql);
+
 			ps.setString(1, loginId);
 			ps.setString(2, password);
 
@@ -118,6 +119,7 @@ public class UserDao {
 		try {
 			StringBuilder sql = new StringBuilder();
 			if (StringUtils.isEmpty(user.getPassword())) {
+
 				sql.append("UPDATE users SET");
 				sql.append(" user_id = ?,");
 				sql.append(" password= ?,");
@@ -136,6 +138,7 @@ public class UserDao {
 				ps.setInt(5, user.getPositionId());
 				ps.setInt(6, user.getId());
 			} else {
+
 				sql.append("UPDATE users SET");
 				sql.append(" user_id = ?,");
 				sql.append(" name = ?,");
@@ -174,6 +177,7 @@ public class UserDao {
 			String sql = "SELECT * FROM users WHERE id = ?";
 
 			ps = connection.prepareStatement(sql);
+
 			ps.setInt(1, id);
 
 			ResultSet rs = ps.executeQuery();

@@ -17,13 +17,19 @@
 	<div class="errorMessages">
 		<ul>
 			<c:forEach items="${errorMessages}" var="message">
-				<li><c:out value="${message}" />
+				<font color="red"><li>エラー：<c:out value="${message}" /></font>
 			</c:forEach>
 		</ul>
 	</div>
 	<c:remove var="errorMessages" scope="session"/>
 </c:if>
 
+<div class="header">
+	<h3>・メニュー</h3>
+		<a href="home">ホーム画面</a><br />
+</div><br />
+
+<h3>・新規投稿</h3>
 <form action="posting" method="post">
 	<label for="title">件名 (50文字以下)</label><br />
 	<input name="title" value="${ posting.title }" id="title"/> <br />
@@ -37,9 +43,6 @@
 	<input type="submit" value="投稿" /> <br />
 </form>
 <br />
-<div class="header">
-	<a href="home">戻る</a><br />
-</div>
 <div class="copyright">Copyright(c) Haruka Suganuma</div>
 </div>
 </body>
