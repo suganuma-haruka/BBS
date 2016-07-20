@@ -40,7 +40,7 @@
 
 	<label for="category">カテゴリー (10文字以下)</label><br />
 	<input name="category" value="${ posting.category }" id="category"/><br />
-
+	<br />
 	<input type="submit" value="投稿" /> <br />
 </form>
 <br />

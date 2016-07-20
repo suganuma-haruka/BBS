@@ -54,13 +54,6 @@
 					<c:out value="${ branch.name }" />
 				</option>
 			</c:forEach>
-
-<%--		<c:forEach items="${ branchList }" var="branch">
-			<option value="${ branch.id }">
-				<c:out value="${ branch.name }" />
-			</option>
-		</c:forEach>
---%>
 	</select><br />
 
 	<label for="position">所属部署・役職</label><br />
@@ -71,15 +64,8 @@
 				<c:out value="${ position.name }" />
 			</option>
 		</c:forEach>
-
-<%--		<c:forEach items="${ positionList }" var="position">
-			<option value="${ position.id }">
-				<c:out value="${ position.name }" />
-			</option>
-		</c:forEach>
---%>
 	</select><br />
-
+	<br />
 	<input type="submit" value="登録" /> <br />
 <br />
 </form>

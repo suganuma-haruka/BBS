@@ -121,51 +121,6 @@
 		</tr>
 	</c:forEach>
 
-<%--
-	<c:forEach items="${ userControlList }" var="user">
-		<div class="setting">
-			<div class="account-name">
-				<span class="userId">【ログインID】：<c:out value="${ user.userId }" /></span><br/>
-
-				<span class="name">【ユーザー名】：<c:out value="${ user.name }" /></span><br/>
-
-				<c:forEach items="${ branchList }" var="branch">
-					<c:if test = "${ user.branchId == branch.id }">
-						<span class="name">【所属支店】：<c:out value="${ branch.name }" /></span><br/>
-					</c:if>
-				</c:forEach>
-
-				<c:forEach items="${ positionList }" var="position">
-					<c:if test = "${ user.positionId == position.id }">
-						<span class="name">【所属部署・役職】：<c:out value="${ position.name }" /></span><br/>
-					</c:if>
-				</c:forEach>
-			</div>
-			<c:if test = "${ user.id != loginUser.id }">
-				<form action="changeState" method="post">
-					<c:if test = "${ user.state == 0 }">
-						<input type='hidden' value="1" name='state'>
-						<input type='hidden' value="${ user.id }" name='id'>
-						<input type="submit" value="アカウントを復活" onClick = "return confirm('このユーザーアカウントを復活します。よろしいですか？')">
-		 			</c:if>
-		 			<c:if test = "${ user.state == 1 }">
-						<input type='hidden' value="0" name='state'>
-						<input type='hidden' value="${ user.id }" name='id'>
-						<input type="submit" value="アカウントを停止" onClick = "return confirm('このユーザーアカウントを停止します。よろしいですか？')">
-					</c:if>
-				</form>
-			</c:if>
-			<c:if test = "${ user.id != loginUser.id }">
-				<form action = "deleteUser" method = "post">
-					<input type='hidden' value = "${ user.id }" name='id'>
-					<input type = "submit" value="アカウント削除" onClick = "return confirm('このユーザーアカウントを削除します。よろしいですか？')">
-				</form></br>
-			</c:if>
-			<a href="settings?userId=${ user.id }">ユーザー編集</a><br/>
-			<br />
-		</div>
-	</c:forEach>
---%>
 </table>
 <br />
 </div>

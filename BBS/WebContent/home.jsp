@@ -15,7 +15,7 @@
 
 <h2>
 	<c:out value="${ loginUser.name }"></c:out>
-	さん、こんにちは。
+	 さん、こんにちは。
 </h2>
 
 <c:if test="${ not empty errorMessages }">
@@ -112,14 +112,13 @@
 			</c:forEach>
 			</select>日
 			<br>
-			<input type="submit" value="検索"><input type="reset" value="リセット">
+			<br />
+			<input type="submit" value="検索">
+			<button type="button"onclick="location.href='home'">リセット</button>
 		</tr>
 	</table>
 </form><br/>
 <HR width="60%" align="left">
-
-
-
 
 <h3>・投稿一覧</h3>
 	<div class="userPostings">

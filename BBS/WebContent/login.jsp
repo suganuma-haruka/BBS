@@ -30,6 +30,7 @@
 
 	<label for="password">パスワード</label><br />
 	<input name="password" type="password" id="password"/> <br />
+	<br />
 	<input type="submit" value="ログイン" /> <br />
 <br />
 </form>

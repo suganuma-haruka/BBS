@@ -82,6 +82,7 @@
 		</select><br />
 
 	<input type='hidden' value="${ editUser.id }" name='id'>
+	<br />
 	<input type="submit" value="編集" />
 	</form>
 <br />
