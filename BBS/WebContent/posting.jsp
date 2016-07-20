@@ -28,6 +28,7 @@
 	<h3>・メニュー</h3>
 		<a href="home">ホーム画面</a><br />
 </div><br />
+<HR width="60%" align="left">
 
 <h3>・新規投稿</h3>
 <form action="posting" method="post">

@@ -29,6 +29,7 @@
 		<a href="home">ホーム画面</a>
 		<a href="userControl">ユーザー管理画面</a>
 </div><br />
+<HR width="60%" align="left">
 
 <h3>・ユーザー新規登録</h3>
 <form action="signup" method="post">
