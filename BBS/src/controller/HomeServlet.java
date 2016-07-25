@@ -1,7 +1,10 @@
 package controller;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -31,9 +34,9 @@ public class HomeServlet extends HttpServlet {
 
 		List<String> messages = new ArrayList<String>();
 
-		User user = (User) request.getSession().getAttribute("loginUser");
+		User loginUser = (User) request.getSession().getAttribute("loginUser");
 
-		session.setAttribute("loginUser", user);
+		session.setAttribute("loginUser", loginUser);
 
 		String category = request.getParameter("category");
 		String startYear = request.getParameter("startYear");
@@ -60,11 +63,30 @@ public class HomeServlet extends HttpServlet {
 			return;
 		}
 
+		if (checkDate(startDate) == false) {
+			messages.add("不正な処理が実行されました。");
+			session.setAttribute("errorMessages", messages);
+			response.sendRedirect("home");
+			return;
+		}
+
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        System.out.println(sdf.format(date));
+
 		if (!StringUtil.isEmpty(endYear) && !StringUtil.isEmpty(endMonth) && !StringUtil.isEmpty(endDay)) {
 			endDate = endYear +'-'+ endMonth +'-'+ endDay;
 		} else if(StringUtil.isEmpty(endYear) && StringUtil.isEmpty(endMonth) && StringUtil.isEmpty(endDay)){
-			endDate = new PostingService().getEndDay();
+//			endDate = new PostingService().getEndDay();
+			endDate = sdf.format(date);
 		} else {
+			messages.add("不正な処理が実行されました。");
+			session.setAttribute("errorMessages", messages);
+			response.sendRedirect("home");
+			return;
+		}
+
+		if (checkDate(endDate) == false) {
 			messages.add("不正な処理が実行されました。");
 			session.setAttribute("errorMessages", messages);
 			response.sendRedirect("home");
@@ -86,13 +108,6 @@ public class HomeServlet extends HttpServlet {
 		endDay = String.format("%2s", endResult[2]).replace(" ", "0");
 
 		endDate = endYear + '-' + endMonth + '-' + endDay;
-
-		if (StringUtil.isEmpty(startDate)) {
-			messages.add("不正な処理が実行されました。");
-			session.setAttribute("errorMessages", messages);
-			response.sendRedirect("home");
-			return;
-		}
 
 		List<UserPosting> userPostings = new PostingService().getPostings(category, startDate, endDate);
 		List<UserComment> userComments = new CommentService().getComment();
@@ -117,6 +132,23 @@ public class HomeServlet extends HttpServlet {
 		request.setAttribute("categories", categories);
 		request.setAttribute("category", category);
 		request.getRequestDispatcher("/home.jsp").forward(request, response);
+	}
+
+
+	public static boolean checkDate(String date) {
+	    if (date == null || date.length() != 10) {
+//	        throw new IllegalArgumentException("引数の文字列["+ date +"]" + "は不正です。");
+	    }
+	    date = date.replace('-', '/');
+	    DateFormat format = DateFormat.getDateInstance();
+	    // 日付/時刻解析を厳密に行うかどうかを設定する。
+	    format.setLenient(false);
+	    try {
+	        format.parse(date);
+	        return true;
+	    } catch (Exception e) {
+	        return false;
+	    }
 	}
 
 }

@@ -15,7 +15,7 @@
 
 <h2>
 	<c:out value="${ loginUser.name }"></c:out>
-	 さん、こんにちは。
+	さん、こんにちは。
 </h2>
 
 <c:if test="${ not empty errorMessages }">
@@ -127,8 +127,20 @@
 	<h4>-- 投稿内容 --</h4>
 		<div class="name">【投稿者】：<c:out value="${ posting.name }"/></div>
 		<div class="title">【件名】：<c:out value="${ posting.title }" /></div>
-		<div class="text">【本文】：<c:out value="${ posting.text }" /></div>
-		<div class="category">【カテゴリー】<c:out value="${ posting.category }" /></div>
+		<div class="text">【本文】：
+
+		<%
+		String lineSeparator = System.getProperty("line.separator");
+		String result = "text".replaceAll(lineSeparator, "<br>");
+		%>
+
+		<c:forTokens var="splitPosting" items="${ posting.text }" delims="<%= lineSeparator %>">
+			<c:out value="${ splitPosting }"></c:out>
+			<br>
+		</c:forTokens>
+
+		</div>
+		<div class="category">【カテゴリー】：<c:out value="${ posting.category }" /></div>
 		<div class="date">【投稿日時】：<fmt:formatDate value="${ posting.insertDate }" pattern="yyyy/MM/dd HH:mm:ss" /></div>
 	 		<c:if test = "${ loginUser.branchId == 1 && loginUser.positionId == 2 }">
 				<form action = "deletePosting" method = "post">

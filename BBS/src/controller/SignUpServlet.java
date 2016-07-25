@@ -88,7 +88,7 @@ public class SignUpServlet extends HttpServlet {
 		if (StringUtils.isEmpty(userId) == true) {
 			messages.add("ログインIDを入力してください。");
 		} else if (!userId.matches("^[0-9a-zA-Z]{6,20}")) {
-			messages.add("ログインIDは半角英数字6桁以上20桁以下で入力してください。");
+			messages.add("ログインIDは半角英数字6文字以上20文字で入力してください。");
 		}
 		if(user != null)  {
 			messages.add("このログインIDは既に使用されています");
@@ -97,9 +97,9 @@ public class SignUpServlet extends HttpServlet {
 		if (StringUtils.isEmpty(password) == true || StringUtils.isEmpty(passwordCheck) == true) {
 			messages.add("パスワードを入力してください。");
 		} else if (password.matches("^[a-zA-Z0-9 -/:-@\\[-\\`\\{-\\~]")) {
-			messages.add("パスワードは半角文字のみで入力してください。");
+			messages.add("パスワードは半角文字のみで6文字以上255文字以下で入力してください。");
 		} else if (password.matches("{6,255}$")) {
-			messages.add("パスワードは6文字以上255文字以下で入力してください。");
+			messages.add("パスワードは半角文字のみで6文字以上255文字以下で入力してください。");
 		} else if (password.equals(passwordCheck) == false) {
 			messages.add("入力されたパスワードが一致しません。");
 		}
@@ -116,6 +116,14 @@ public class SignUpServlet extends HttpServlet {
 
 		if (position == 0){
 			messages.add("所属部署・役職を選択してください。");
+		}
+
+		if (branch == 1 && position !=1 && position != 2) {
+			messages.add("支店コードと所属部署・役職の組み合わせが不正です。");
+		}
+
+		if (branch != 1 && position != 3 && position != 4) {
+			messages.add("支店コードと所属部署・役職の組み合わせが不正です。");
 		}
 
 		// TODO アカウントが既に利用されていないか、メールアドレスが既に登録されていないかなどの確認も必要

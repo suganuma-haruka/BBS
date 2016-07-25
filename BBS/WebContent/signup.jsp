@@ -35,16 +35,16 @@
 <form action="signup" method="post">
 
 	<label for="userId">ログインID</label><br />
-	<input name="userId" value="${user.userId}" id="userId"/><br />
+	<input name="userId" value="${user.userId}" id="userId"/>(半角英数字、6文字以上20文字以内)<br />
 
 	<label for="password">パスワード</label><br />
-	<input name="password" type="password" id="password"/> <br />
+	<input name="password" type="password" id="password"/>(記号を含む全ての半角文字、6文字以上255文字以内)<br />
 
 	<label for="passwordCheck">パスワード(確認)</label><br />
 	<input name="passwordCheck" type="password" id="password"/> <br />
 
 	<label for="name">ユーザー名</label><br />
-	<input name="name" value="${user.name}" id="name"/><br />
+	<input name="name" value="${user.name}" id="name"/>(10文字以内)<br />
 
 	<label for="branch">所属支店</label><br />
 	<select name="branch">
